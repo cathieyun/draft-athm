@@ -354,7 +354,7 @@ def CreatePublicKeyProof(z, Z):
     I2OSP(len(ser_gamma_z), 2) + ser_gamma_z
 
   e = G.HashToScalar(challenge_transcript, "KeyCommitments")
-  a_z = rho_z - (challenge * z)
+  a_z = rho_z - (e * z)
 
   return PublicKeyProof(e, a_z)
 ~~~
