@@ -1,0 +1,91 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2025-06-22T00:45:47.070807+00:00",
+  "repo": "cathieyun/draft-athm",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOO-FvB86bQ2Eu",
+      "title": "fixed e/challenge typo",
+      "url": "https://github.com/cathieyun/draft-athm/pull/1",
+      "state": "MERGED",
+      "author": "SamuelSchlesinger",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-06-19T13:43:35Z",
+      "updatedAt": "2025-06-20T19:05:55Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "c14f66937f27894e500c28e82de191fa70b5216e",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "samschles/fix-e-challenge-typo",
+      "headRefOid": "1e58be268d6496b89033be6c90caefc814983a6d",
+      "closedAt": "2025-06-20T19:05:54Z",
+      "mergedAt": "2025-06-20T19:05:54Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "cbcbcde4935ca3ea5f4dd488bb313e0ca61ccc5f"
+      },
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "LGTM, thanks for the catch",
+          "createdAt": "2025-06-20T19:05:51Z",
+          "updatedAt": "2025-06-20T19:05:51Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}
