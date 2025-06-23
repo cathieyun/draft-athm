@@ -139,8 +139,8 @@ class IssuerPrivateKey(object):
 class Issuer(object):
     def keygen(self, rng):
         x = G.random_scalar(rng)
-        y = G.random_scalar(rng)
-        z = G.random_scalar(rng)
+        y = G.random_nonzero_scalar(rng)
+        z = G.random_nonzero_scalar(rng)
         r_x = G.random_scalar(rng)
         r_y = G.random_scalar(rng)
 

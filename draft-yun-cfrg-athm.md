@@ -305,8 +305,8 @@ Parameters
 
 def KeyGen():
   x = G.RandomScalar()
-  y = G.RandomScalar()
-  z = G.RandomScalar()
+  y = G.RandomNonzeroScalar()
+  z = G.RandomNonzeroScalar()
   r_x = G.RandomScalar()
   r_y = G.RandomScalar()
 
@@ -381,7 +381,7 @@ Input:
 - pi: PublicKeyProof
 
 Output:
-- True if valid, False otherwise
+- publicKey if valid, False otherwise
 
 def VerifyPublicKeyProof(publicKey, pi):
   gamma_z = (pi.e * publicKey.Z) +
@@ -397,7 +397,9 @@ def VerifyPublicKeyProof(publicKey, pi):
     I2OSP(len(ser_gamma_z), 2) + ser_gamma_z
 
   e_verify = G.HashToScalar(challenge_transcript, "KeyCommitments")
-  return e_verify == e
+  if e_verify == e:
+    return publicKey
+  return False
 ~~~
 
 ## ATHM Protocol
@@ -416,7 +418,8 @@ known only to the server.
 The protocol begins with the client making a token request using the verified server public key.
 
 ~~~
-(context, request) = TokenRequest(publicKey, pi)
+verifiedPublicKey = VerifyPublicKeyProof(publicKey, pi)
+(context, request) = TokenRequest(verifiedPublicKey)
 ~~~
 
 The client then sends `request` to the server. If the request is well-formed, the server computes a token response with the server private keys and hidden metadata. The response includes a proof that the token response is valid with respect to the server keys, and a maximum number of buckets for the hidden metadata.
@@ -428,7 +431,7 @@ response = CredentialResponse(privateKey, publicKey, request, hiddenMetadata, nB
 The server sends the response to the client. The client processes the response by verifying the response proof. If the proof verifies correctly, the client computes a token from its context and the server response:
 
 ~~~
-token = FinalizeToken(context, publicKey, request, response, nBuckets)
+token = FinalizeToken(context, verifiedPublicKey, request, response, nBuckets)
 ~~~
 
 When the client presents the token to the server for redemption, the server verifies it using its private keys, as follows:
@@ -445,7 +448,8 @@ Shown graphically, the protocol runs as follows:
 
    Client(publicKey)                      Server(privateKey, publicKey, hiddenMetadata)
          ---                                                  ---
-  (context, request) = TokenRequest(publicKey, pi)
+  verifiedPublicKey = VerifyPublicKeyProof(publicKey, pi)
+  (context, request) = TokenRequest(verifiedPublicKey)
 
                                 request
                             --------------->
@@ -455,7 +459,7 @@ Shown graphically, the protocol runs as follows:
                                 response
                             <---------------
 
-  token = FinalizeToken(context, publicKey, request, response, nBuckets)
+  token = FinalizeToken(context, verifiedPublicKey, request, response, nBuckets)
 
      ....
 
@@ -474,11 +478,10 @@ The TokenRequest function is defined below.
 
 ~~~
 Inputs:
-- publicKey:
+- verifiedPublicKey:
   - Z: Element
   - C_x: Element
   - C_y: Element
-- pi: PublicKeyProof
 
 Outputs:
 - context:
@@ -490,12 +493,10 @@ Outputs:
 Parameters:
 - G: Group
 
-def TokenRequest(publicKey, pi):
-  if VerifyPublicKeyProof(publicKey, pi) == false:
-    raise VerifyError
+def TokenRequest(client):
   r = G.RandomScalar()
   tc = G.RandomScalar()
-  T = (r * G.GeneratorG()) + (tc * publicKey.Z)
+  T = (r * G.GeneratorG()) + (tc * verifiedPublicKey.Z)
   return context(r, tc), request(T)
 ~~~
 
@@ -662,13 +663,15 @@ def CreateIssuanceProof(privateKey, publicKey, hiddenMetadata, nBuckets, d, U, V
   )
 
   e = G.HashToScalar(challenge_transcript, "TokenResponseProof")
-  e_vec[metadata] = e - sum(e_vec) # Set the correct e_vec[b] value.
+  # Set the correct e_vec[hiddenMetadata] value.
+  e_vec[hiddenMetadata] = e - sum(e_vec)
 
   d_inv = G.ScalarInverse(d)
   rho = -(privateKey.r_x + (hiddenMetadata * privateKey.r_y) + mu)
   w = privateKey.x + (hiddenMetadata * privateKey.y) + (ts * privateKey.z)
 
-  a_vec[b] = r_mu + (e_b * mu) # Set the correct a_vec[b] value.
+  # Set the correct a_vec[hiddenMetadata] value.
+  a_vec[hiddenMetadata] = r_mu + (e_vec[hiddenMetadata] * mu)
   a_d = r_d - (e * d_inv)
   a_rho = r_rho + (e * rho)
   a_w = r_w + (e * w)
@@ -703,7 +706,7 @@ Inputs:
 - context:
   - r: Scalar
   - tc: Scalar
-- publicKey:
+- verifiedPublicKey:
   - Z: Element
   - C_x: Element
   - C_y: Element
@@ -728,8 +731,8 @@ Parameters:
 Exceptions:
 - VerifyError, raised when response proof verification fails
 
-def FinalizeToken(context, publicKey, request, response, nBuckets):
-  if VerifyIssuanceProof(publicKey, request, response, nBuckets) == false:
+def FinalizeToken(context, verifiedPublicKey, request, response, nBuckets):
+  if VerifyIssuanceProof(verifiedPublicKey, request, response, nBuckets) == false:
     raise VerifyError
 
   c = G.RandomNonzeroScalar()
