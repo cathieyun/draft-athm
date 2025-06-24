@@ -56,7 +56,7 @@ class Proof(object):
         r_rho = G.random_scalar(rng)
         r_w = G.random_scalar(rng)
 
-        mu = G.random_nonzero_scalar(rng)
+        mu = G.random_scalar(rng)
         C = (scalar_b * pk.C_y) + (mu * GenH)
 
         C_b = r_mu * GenH
