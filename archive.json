@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-22T00:45:47.070807+00:00",
+  "timestamp": "2025-06-24T00:41:45.192383+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -86,6 +86,46 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOO-FvB86buZ2K",
+      "title": "Fix typos, add VerifiedPublicKey struct",
+      "url": "https://github.com/cathieyun/draft-athm/pull/2",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Added VerifiedPublicKey struct to address the feedback:\r\n> Should this (server key proof verification) be invoked in every token request? shouldn't this be just a one time verification of the public parameters?\r\n\r\nFixed some typos / leftovers from renaming `b` to `hiddenMetadata`.\r\n\r\nSampled the server keys (y, z) from Z*_p instead of Z_p, for correctness.",
+      "createdAt": "2025-06-23T19:45:17Z",
+      "updatedAt": "2025-06-23T21:10:51Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "cbcbcde4935ca3ea5f4dd488bb313e0ca61ccc5f",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "google-feedback",
+      "headRefOid": "bb8acb7ea86af955fc93b8d55b1afbc20e3b504a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOO-FvB86v7Rn4",
+          "commit": {
+            "abbreviatedOid": "bb8acb7"
+          },
+          "author": "SamuelSchlesinger",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-23T21:10:51Z",
+          "updatedAt": "2025-06-23T21:10:51Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
