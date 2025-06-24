@@ -1926,7 +1926,7 @@ def CreateIssuanceProof(privateKey, publicKey, hiddenMetadata, nBuckets, d, U, V
   r_d = G.RandomScalar()
   r_rho = G.RandomScalar()
   r_w = G.RandomScalar()
-  mu = G.RandomNonzeroScalar()
+  mu = G.RandomScalar()
 
   C = hiddenMetadata * publicKey.C_y + mu * G.GeneratorH()
   C_vec = []
