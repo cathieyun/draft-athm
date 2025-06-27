@@ -67,7 +67,32 @@ to the client.
 
 # Introduction
 
-TODO Introduction
+This document presents a construction for anonymous tokens with hidden metadata (ATHMs). 
+ATHM is a cryptographic primitive that enables an issuer to issue an authentication
+token to a client in a way that the token carries no information about the client
+identity except a hidden metadata value the issuer sets during issuance. The value 
+of the hidden metadata comes from a fixed domain and the client can verify this property 
+of the hidden metadata of the token it receives. The metadata value remains hidden with
+respect to any party which does not have the secret key for the ATHM construction, 
+including the client. Only the issuer who has the secret for the construction can verify 
+the token and read the hidden metadata value.
+
+Similarly to public metadata proposed in the context of existing anonymous tokens schemes
+{{I-D.ietf-privacypass-public-metadata-issuance}}, the hidden metadata enables the issuer 
+to partition clients into a number of groups proportional to the domain of the hidden metadata. 
+During token redemption the issuer can identify which group the client belongs to based on 
+the metadata value. The difference from public metadata is that this value of hidden metadata 
+is only readable by the issuer who has the ATHM secret key, while public metadata embedded 
+in the token is visible to everyone.
+
+Anonymous tokens are used for client authentication and their meaning is to convey trust
+in the client. In most cases the trust assigned to a client is determined based on the outcome 
+of fraud and spam detection processes. It is often crucial that the signals used to obtain 
+the verdict and the verdict itself remain hidden from the adversary, who can adapt its behavior 
+to avoid detection if it knows when and why its behavior has been identified as fraudulent. 
+ATHMs can provide the means to issue authentication tokens that provide limited hidden fraud 
+signals while preserving strong anonymity guarantees.
+
 
 
 # Conventions and Definitions
