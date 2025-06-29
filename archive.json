@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-26T00:41:26.471627+00:00",
+  "timestamp": "2025-06-29T00:47:08.180445+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -128,6 +128,47 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOO-FvB86cWGyf",
+      "title": "Update draft-yun-cfrg-athm.md",
+      "url": "https://github.com/cathieyun/draft-athm/pull/3",
+      "state": "OPEN",
+      "author": "marianapr",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "draft for an intro",
+      "createdAt": "2025-06-27T03:59:48Z",
+      "updatedAt": "2025-06-27T14:37:47Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "c00275d93373fd889fc7142d51a18baf1df377ec",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "marianapr-patch-1",
+      "headRefOid": "8c36680d2c4208430cf5c104411209840f639460",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "This looks good, thanks for putting an intro together! And I think referencing the public metadata spec is helpful too. \r\n\r\nNit, this breaks the Editor's Copy build because of trailing whitespace. You can either remove the whitespace manually, or run the linter (make fix-lint) to fix all lint mistakes automatically. ",
+          "createdAt": "2025-06-27T14:36:46Z",
+          "updatedAt": "2025-06-27T14:36:46Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "LGTM after lint fixes. ",
+          "createdAt": "2025-06-27T14:37:47Z",
+          "updatedAt": "2025-06-27T14:37:47Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
