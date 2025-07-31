@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-27T00:49:49.808439+00:00",
+  "timestamp": "2025-07-31T00:44:13.641147+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -49,7 +49,58 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 4,
+      "id": "I_kwDOO-FvB87DZ83v",
+      "title": "Add Ristretto as a supported ATHM curve",
+      "url": "https://github.com/cathieyun/draft-athm/issues/4",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "SamuelSchlesinger"
+      ],
+      "labels": [],
+      "body": "A request from the Google folks. Will assign to Sam to update the spec with this curve and test vectors.",
+      "createdAt": "2025-07-30T20:27:40Z",
+      "updatedAt": "2025-07-30T20:27:46Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOO-FvB87DZ9j6",
+      "title": "Encode protocol specific information in the F-S transform",
+      "url": "https://github.com/cathieyun/draft-athm/issues/5",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Encode information about the protocol, such as what version/deployment as well as how many buckets, in the F-S transform so it's cryptographically tied to the issuance proof.\n\nDo this in the spec, as well as poc so the test vectors get updated.",
+      "createdAt": "2025-07-30T20:28:51Z",
+      "updatedAt": "2025-07-30T21:08:37Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOO-FvB87DZ-Kx",
+      "title": "Updated poc and test vectors for P256 and multi-bucket protocol",
+      "url": "https://github.com/cathieyun/draft-athm/issues/6",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "We need test vectors for P256, with the multi-bucket ATHM, in order to test interoperability.",
+      "createdAt": "2025-07-30T20:29:51Z",
+      "updatedAt": "2025-07-30T20:29:51Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
