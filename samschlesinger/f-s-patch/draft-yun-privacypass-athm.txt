@@ -4,8 +4,8 @@
 
 Network Working Group                                       J. Appleseed
 Internet-Draft                                               Apple, Inc.
-Intended status: Standards Track                            24 June 2025
-Expires: 26 December 2025
+Intended status: Standards Track                           4 August 2025
+Expires: 5 February 2026
 
 
      Anonymous Token with Hidden Metadata Privacy Pass Issuance and
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2025.
+   This Internet-Draft will expire on 5 February 2026.
 
 Copyright Notice
 

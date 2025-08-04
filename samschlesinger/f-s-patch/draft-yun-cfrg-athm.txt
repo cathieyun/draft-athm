@@ -5,10 +5,10 @@
 Crypto Forum                                                      C. Yun
 Internet-Draft                                                C. A. Wood
 Intended status: Informational                               Apple, Inc.
-Expires: 26 December 2025                                     M. Raykova
+Expires: 5 February 2026                                      M. Raykova
                                                           S. Schlesinger
                                                                   Google
-                                                            24 June 2025
+                                                           4 August 2025
 
 
                  Anonymous Tokens with Hidden Metadata
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2025.
+   This Internet-Draft will expire on 5 February 2026.
 
 Copyright Notice
 
@@ -274,8 +274,7 @@ Table of Contents
 4.1.  ATHM(P-256, SHA-256)
 
    This ciphersuite uses P-256 [NISTCurves] for the Group.  The value of
-   the ciphersuite identifier is "P256".  The value of contextString is
-   "ARCV1-P256".
+   the ciphersuite identifier is "P256".
 
    *  Group: P-256 (secp256r1) [NISTCurves]
 
@@ -365,6 +364,10 @@ Table of Contents
    In the offline phase, the server generates a public and private key
    using the KeyGen routine below.  The type PublicKeyProof and the
    function CreatePublicKeyProof are specified in Section 5.1.1.
+   Further, they must agree on a string deploymentId and a number of
+   buckets nBuckets.  The contextString as used in HashToGroup and
+   HashToCurve is ATHMV1:<group-name>:<nBuckets>:<deploymentId>.  An
+   example of contextString is ATHMV1:P-256:4:example-deployment-id.
 
    Input: None
    Output:
@@ -949,8 +952,8 @@ def VerifyToken(privateKey, token, nBuckets):
 8.1.  Normative References
 
    [I-D.irtf-cfrg-hash-to-curve]
-              Faz-Hernandez, A., Scott, S., Sullivan, N., Wahby, R. S.,
-              and C. A. Wood, "Hashing to Elliptic Curves", Work in
+              Faz-Hernandez, A. F., Scott, S., Sullivan, N., Wahby, R.
+              S., and C. A. Wood, "Hashing to Elliptic Curves", Work in
               Progress, Internet-Draft, draft-irtf-cfrg-hash-to-curve-
               16, 15 June 2022, <https://datatracker.ietf.org/doc/html/
               draft-irtf-cfrg-hash-to-curve-16>.
