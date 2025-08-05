@@ -216,8 +216,7 @@ Applications should take caution in using ciphersuites targeting P-256 and ristr
 ## ATHM(P-256, SHA-256)
 
 This ciphersuite uses P-256 {{NISTCurves}} for the Group.
-The value of the ciphersuite identifier is "P256". The value of
-contextString is "ARCV1-P256".
+The value of the ciphersuite identifier is "P256".
 
 - Group: P-256 (secp256r1) {{NISTCurves}}
   - Order(): Return 0xffffffff00000000ffffffffffffffffbce6faada7179e84f3b9cac2fc632551.
@@ -283,6 +282,9 @@ TODO(caw): writeme
 
 In the offline phase, the server generates a public and private key using the KeyGen routine below.
 The type PublicKeyProof and the function CreatePublicKeyProof are specified in {{public-key-proof}}.
+Further, they must agree on a string `deploymentId` and a number of buckets `nBuckets`. The `contextString`
+as used in `HashToGroup` and `HashToCurve` is `ATHMV1:<group-name>:<nBuckets>:<deploymentId>`. An
+example of `contextString` is `ATHMV1:P-256:4:example-deployment-id`.
 
 ~~~
 Input: None
