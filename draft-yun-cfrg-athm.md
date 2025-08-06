@@ -899,6 +899,9 @@ TODO acknowledge.
 {:numbered="false"}
 
 This section contains test vectors for the ATHM ciphersuites specified in this document.
+The test vectors were generated using a detereministically seeded PRNG, as implemented by the rand_chacha Rust crate.
+TODO(schoppmp): Link to implementation.
+All byte strings, except `deployment_id`, are encoded in hexadecimal.
 
 ## ATHM(P-256, SHA-256)
 
