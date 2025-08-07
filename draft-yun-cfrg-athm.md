@@ -904,6 +904,7 @@ TODO(schoppmp): Link to implementation.
 All byte strings, except `deployment_id`, are encoded in hexadecimal.
 
 ## ATHM(P-256, SHA-256)
+{:numbered="false"}
 
 ~~~JSON
 [
