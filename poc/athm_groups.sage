@@ -1,14 +1,14 @@
-from sagelib.groups import GroupP384
+from sagelib.groups import GroupP256
 from util import to_bytes
 
-G = GroupP384()
+G = GroupP256()
 
 version_identifier = "ATHMV1-"
 
 def create_context_string(identifier):
   return version_identifier + identifier
 
-suite_identifier = create_context_string("P384-SHA384-")
+suite_identifier = create_context_string("P256-")
 
 def hash_to_group(x, info):
     dst = to_bytes("HashToGroup-") + to_bytes(suite_identifier) + info

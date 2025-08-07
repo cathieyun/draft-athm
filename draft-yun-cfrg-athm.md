@@ -283,8 +283,8 @@ TODO(caw): writeme
 In the offline phase, the server generates a public and private key using the KeyGen routine below.
 The type PublicKeyProof and the function CreatePublicKeyProof are specified in {{public-key-proof}}.
 Further, they must agree on a string `deploymentId` and a number of buckets `nBuckets`. The `contextString`
-as used in `HashToGroup` and `HashToCurve` is `ATHMV1:<group-name>:<nBuckets>:<deploymentId>`. An
-example of `contextString` is `ATHMV1:P-256:4:example-deployment-id`.
+as used in `HashToGroup` and `HashToCurve` is `ATHMV1-<group-name>-<nBuckets>-<deploymentId>`. An
+example of `contextString` is `ATHMV1-P256-4-example_deployment_id`.
 
 ~~~
 Input: None
