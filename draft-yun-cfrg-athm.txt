@@ -5,10 +5,10 @@
 Crypto Forum                                                      C. Yun
 Internet-Draft                                                C. A. Wood
 Intended status: Informational                               Apple, Inc.
-Expires: 6 February 2026                                      M. Raykova
+Expires: 8 February 2026                                      M. Raykova
                                                           S. Schlesinger
                                                                   Google
-                                                           5 August 2025
+                                                           7 August 2025
 
 
                  Anonymous Tokens with Hidden Metadata
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 February 2026.
+   This Internet-Draft will expire on 8 February 2026.
 
 Copyright Notice
 
@@ -366,8 +366,8 @@ Table of Contents
    function CreatePublicKeyProof are specified in Section 5.1.1.
    Further, they must agree on a string deploymentId and a number of
    buckets nBuckets.  The contextString as used in HashToGroup and
-   HashToCurve is ATHMV1:<group-name>:<nBuckets>:<deploymentId>.  An
-   example of contextString is ATHMV1:P-256:4:example-deployment-id.
+   HashToCurve is ATHMV1-<group-name>-<nBuckets>-<deploymentId>.  An
+   example of contextString is ATHMV1-P256-4-example_deployment_id.
 
    Input: None
    Output:
