@@ -160,7 +160,7 @@ Table of Contents
 
    The Issuer Public Key ID, denoted issuer_key_id, is computed as the
    SHA-256 hash of the Issuer Public Key, i.e., issuer_key_id = SHA-
-   256(SerialiePublicKey(pkI)).
+   256(SerializedPublicKey(pkI)).
 
 5.  Token Issuance Protocol
 
