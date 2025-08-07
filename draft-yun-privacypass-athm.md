@@ -110,7 +110,7 @@ skI, pkI = KeyGen()
 ~~~
 
 The Issuer Public Key ID, denoted `issuer_key_id`, is computed as the SHA-256
-hash of the Issuer Public Key, i.e., `issuer_key_id = SHA-256(SerializePublicKey(pkI))`.
+hash of the Issuer Public Key, i.e., `issuer_key_id = SHA-256(SerializedPublicKey(pkI))`.
 
 # Token Issuance Protocol
 
