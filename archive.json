@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-07T00:45:30.081041+00:00",
+  "timestamp": "2025-08-10T00:49:09.637965+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -193,24 +193,26 @@
       "id": "PR_kwDOO-FvB86cWGyf",
       "title": "Update draft-yun-cfrg-athm.md",
       "url": "https://github.com/cathieyun/draft-athm/pull/3",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "marianapr",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "draft for an intro",
       "createdAt": "2025-06-27T03:59:48Z",
-      "updatedAt": "2025-08-06T20:56:14Z",
+      "updatedAt": "2025-08-07T18:49:28Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
-      "baseRefOid": "c00275d93373fd889fc7142d51a18baf1df377ec",
+      "baseRefOid": "6cd97c57496a39fc2856f19f230c098811831b03",
       "headRepository": "cathieyun/draft-athm",
       "headRefName": "marianapr-patch-1",
-      "headRefOid": "c30979092b103fd1b791f182fbc480d76bc047e9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "5c015b768b4f8d1b21caa141630142ea52d52e4e",
+      "closedAt": "2025-08-07T18:49:28Z",
+      "mergedAt": "2025-08-07T18:49:28Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "97aff3e38813cb28f9d202dd266a390d4ce0e535"
+      },
       "comments": [
         {
           "author": "cathieyun",
@@ -277,52 +279,162 @@
       "id": "PR_kwDOO-FvB86iddbs",
       "title": "Update curve in poc from P384 to P256, remove hash identifier",
       "url": "https://github.com/cathieyun/draft-athm/pull/8",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cathieyun",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Update poc and test vectors to use P256 instead of P384, remove hash identifier.\r\n\r\nAlso small nit on the formatting of the context string, using dash delimiters instead of quotes (not a big deal, but we currently use dashes everywhere else)",
       "createdAt": "2025-08-06T21:06:43Z",
-      "updatedAt": "2025-08-06T21:14:29Z",
+      "updatedAt": "2025-08-07T18:37:34Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "754296f11ffc97ce1cb16623e1de9187e96a37dc",
       "headRepository": "cathieyun/draft-athm",
       "headRefName": "cathie/update-group",
       "headRefOid": "45aa875c59d94ecedacbad47badb64aa5edd4aeb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2025-08-07T18:37:34Z",
+      "mergedAt": "2025-08-07T18:37:34Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "6cd97c57496a39fc2856f19f230c098811831b03"
+      },
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Merging this in so Google folks can use the updated ciphersuite definitions for their test vectors here:\r\nhttps://github.com/cathieyun/draft-athm/pull/9",
+          "createdAt": "2025-08-07T18:35:11Z",
+          "updatedAt": "2025-08-07T18:35:11Z"
+        }
+      ],
       "reviews": []
     },
     {
       "number": 9,
       "id": "PR_kwDOO-FvB86ieLqu",
-      "title": "Add test vectors for ATHM(P-256, SHA-256)",
+      "title": "Add test vectors for ATHM(P-256)",
       "url": "https://github.com/cathieyun/draft-athm/pull/9",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "schoppmp",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Based on the implementation in the following commit: https://github.com/google/anonymous-tokens/commit/3a6ca6cb8d6446396555c2c4dcd250fdc44a30b3",
+      "body": "Based on the implementation in the following commit: https://github.com/google/anonymous-tokens/tree/3a6ca6cb8d6446396555c2c4dcd250fdc44a30b3/athm",
       "createdAt": "2025-08-06T22:39:13Z",
-      "updatedAt": "2025-08-06T23:03:25Z",
+      "updatedAt": "2025-08-07T20:13:49Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
-      "baseRefOid": "754296f11ffc97ce1cb16623e1de9187e96a37dc",
+      "baseRefOid": "97aff3e38813cb28f9d202dd266a390d4ce0e535",
       "headRepository": "schoppmp/draft-athm",
       "headRefName": "patch-1",
-      "headRefOid": "1a240203a219e9f13199df4a602eace6e3455c65",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "headRefOid": "c88e1bbc41cc04ce4cb6feec8f61b63bddc9bd09",
+      "closedAt": "2025-08-07T20:13:49Z",
+      "mergedAt": "2025-08-07T20:13:49Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "2bc3ba126f39d724ead6a066190ee3308bdd5a1f"
+      },
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Amazing, thanks! I'll take a look shortly. In the meantime will kick of the workflows to make sure there aren't any CI failures.",
+          "createdAt": "2025-08-07T06:31:22Z",
+          "updatedAt": "2025-08-07T06:31:22Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Sorry for the nit, but after discussion we realized that we don't need the hash identifier in the ciphersuite - so instead of ATHM(P256, SHA256) the ciphersuite can just be ATHM(P256).\r\n\r\nI updated that in this PR: https://github.com/cathieyun/draft-athm/pull/8\r\nIf I merge that in, can you pull that change into your reference implementation and update the test vectors accordingly? Sorry for the hassle, but I think this simplifies our ciphersuite registry and is a change we should incorporate.",
+          "createdAt": "2025-08-07T18:34:28Z",
+          "updatedAt": "2025-08-07T18:34:28Z"
+        },
+        {
+          "author": "schoppmp",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I updated the context string in the implementation to match the updated spec, and updated the test vectors. PTAL.",
+          "createdAt": "2025-08-07T19:15:24Z",
+          "updatedAt": "2025-08-07T19:15:24Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "One note: because your test vector generation script is using ChaCha20Rng, we won't be able to reproduce the *same* test vectors (as we don't have ChaCha20Rng on CryptoKit IIRC), we will only be able to *verify* the test vectors. \r\n\r\nUnless you also export all the intermediate generated values (eg proof blinding factors, all randomly sampled values), this will be the case. I think I'm okay with only *verifying* test vectors, but want to call this out and double check.",
+          "createdAt": "2025-08-07T19:41:57Z",
+          "updatedAt": "2025-08-07T19:41:57Z"
+        },
+        {
+          "author": "schoppmp",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'm happy to swap out the PRNG to a different one if you have a pointer to one that exists in both Rust and CryptoKit.",
+          "createdAt": "2025-08-07T19:45:47Z",
+          "updatedAt": "2025-08-07T19:45:47Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Yeah I'm not sure what PRNG works between the two (have not duplicated behavior between Rust and CryptoKit before), but I think we're okay as-is because test vectors are usually for verifying that if you received that test vector (eg as a server), you could process it correctly. So we don't actually need to *reproduce* it on the CryptoKit side.",
+          "createdAt": "2025-08-07T19:53:01Z",
+          "updatedAt": "2025-08-07T19:53:19Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "This LGTM from what I can tell from the Rust implementation.\r\nNext week, I will pull these test vectors into CryptoKit and update our CryptoKit implementation to match the spec, and then hopefully the test vectors will pass.\r\n\r\nBut at the time of integration, I will probably have more feedback on the Rust implementation / test vectors. Would it be better to either:\r\n- leave this PR open, so I can leave feedback for the Rust implementation here / the test vectors can get updated accordingly. I'd close this PR once the CryptoKit integration works with the test vectors.\r\n- open an issue directly in the Rust repo with feedback / requested changes (https://github.com/google/anonymous-tokens), and then open a new PR on the ATHM draft with the updated test vectors? This will allow us to close this PR now.",
+          "createdAt": "2025-08-07T19:58:44Z",
+          "updatedAt": "2025-08-07T19:59:16Z"
+        },
+        {
+          "author": "schoppmp",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "If you're OK with the test vector format then I would say merging now and opening issues as they come up is better.",
+          "createdAt": "2025-08-07T20:10:51Z",
+          "updatedAt": "2025-08-07T20:10:51Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOO-FvB864rSRo",
+          "commit": {
+            "abbreviatedOid": "0277e50"
+          },
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-07T18:35:58Z",
+          "updatedAt": "2025-08-07T18:35:58Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Can you add this link, for ease of future reference? (So we don't have to look for this PR to get the reference).",
+              "createdAt": "2025-08-07T18:35:58Z",
+              "updatedAt": "2025-08-07T18:35:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOO-FvB864rfVD",
+          "commit": {
+            "abbreviatedOid": "0277e50"
+          },
+          "author": "schoppmp",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-07T18:58:19Z",
+          "updatedAt": "2025-08-07T18:58:19Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Done.",
+              "createdAt": "2025-08-07T18:58:19Z",
+              "updatedAt": "2025-08-07T18:58:19Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
