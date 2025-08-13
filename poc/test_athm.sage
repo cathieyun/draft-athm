@@ -3,6 +3,7 @@
 
 import sys
 import json
+from sagelib.athm_groups import G, GenG, GenH
 
 try:
     from sagelib.test_drng import TestDRNG
@@ -42,9 +43,14 @@ def main(path="vectors"):
         token_bit = origin.verify_token(token)
         assert(token_bit == metadata_bit)
 
+        param_dict = {}
+        param_dict["generator_g"] = to_hex(G.serialize(GenG))
+        param_dict["generator_h"] = to_hex(G.serialize(GenH))
+
         vectors.append({
             "metadata": metadata_bit,
             "suite": str(suite_identifier),
+            "params": param_dict,
             "issuer": issuer.vectors(),
             "client": client.vectors(),
             "token": token.vectors(),

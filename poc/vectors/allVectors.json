@@ -26,6 +26,10 @@
       "ts": "e899a331f395f26234450aa6ea5157af5720220bcd7f3377a9b1b7fbd1ed9658"
     },
     "metadata": false,
+    "params": {
+      "generator_g": "036b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296",
+      "generator_h": "02eda06535cde3bfd9e76085900cf229eb4f5925648bd51473999d5cae412804b2"
+    },
     "suite": "ATHMV1-P256-",
     "token": {
       "P": "039643be0552986e8862e6615e02c79aeacd23bdccd949f88734a5e790eee7c8f1",
@@ -61,6 +65,10 @@
       "ts": "03144e0b839f36d9890a16cba858d1f6b404fc2551830318f2276d7169ee1044"
     },
     "metadata": true,
+    "params": {
+      "generator_g": "036b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296",
+      "generator_h": "02eda06535cde3bfd9e76085900cf229eb4f5925648bd51473999d5cae412804b2"
+    },
     "suite": "ATHMV1-P256-",
     "token": {
       "P": "0373fc7386e3e1b046f23ac26a736b41296914adc76acfe2c8becc2f3fef911b38",
