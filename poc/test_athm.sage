@@ -46,10 +46,10 @@ def main(path="vectors"):
         param_dict = {}
         param_dict["generator_g"] = to_hex(G.serialize(GenG))
         param_dict["generator_h"] = to_hex(G.serialize(GenH))
+        param_dict["suite"] = str(suite_identifier)
+        param_dict["metadata_bit"] = metadata_bit
 
         vectors.append({
-            "metadata": metadata_bit,
-            "suite": str(suite_identifier),
             "params": param_dict,
             "issuer": issuer.vectors(),
             "client": client.vectors(),
