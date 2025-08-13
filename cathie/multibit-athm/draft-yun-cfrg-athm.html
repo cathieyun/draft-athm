@@ -1,0 +1,2451 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Anonymous Tokens with Hidden Metadata</title>
+<meta content="Cathie Yun" name="author">
+<meta content="Christopher A. Wood" name="author">
+<meta content="Mariana Raykova" name="author">
+<meta content="Samuel Schlesinger" name="author">
+<meta content="
+       This document specifies the Anonymous Tokens with Hidden Metadata (ATHM) protocol, a protocol
+for constructing Privacy Pass like tokens with hidden metadata embedded within it unknown
+to the client. 
+    " name="description">
+<meta content="xml2rfc 3.30.0" name="generator">
+<meta content="next generation" name="keyword">
+<meta content="unicorn" name="keyword">
+<meta content="sparkling distributed ledger" name="keyword">
+<meta content="draft-yun-cfrg-athm-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.30.0
+    Python 3.12.11
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.1
+    intervaltree 3.1.0
+    Jinja2 3.1.6
+    lxml 5.3.1
+    platformdirs 4.3.8
+    pycountry 24.6.1
+    PyYAML 6.0.2
+    requests 2.32.4
+    setuptools 80.9.0
+    wcwidth 0.2.13
+-->
+<link href="draft-yun-cfrg-athm.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+    }
+  }
+  &.olPercent > dt {
+    float: none;
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+}
+dl:not(.dlNewline) > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+}
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* Comments */
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc nav {
+    font-family: var(--font-title);
+    font-weight: 360;
+    & > ul { margin-bottom: 2em; }
+    & ul {
+      margin: 0 0 0 4px;
+      & :is(p, li) {
+        margin: 2px 0;
+      }
+    }
+  }
+  #toc a.toplink {
+    float: right;
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    &::before { /* css hamburger */
+      float: right;
+      position: relative;
+      width: 1em;
+      height: 1px;
+      left: -164px;
+      margin: 8px 0 0 0;
+      background: white none repeat scroll 0 0;
+      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+      content: "";
+    }
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active {
+    opacity: 1;
+    & nav { display: block; }
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:is(:link, :focus, :hover),
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin: 2px 0.5em 0;
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+  #toc a.toplink {
+    margin: 8px 0.5em 0;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">ATHM</td>
+<td class="right">August 2025</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Yun, et al.</td>
+<td class="center">Expires 14 February 2026</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Crypto Forum</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-yun-cfrg-athm-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2025-08-13" class="published">13 August 2025</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2026-02-14">14 February 2026</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">C. Yun</div>
+<div class="org">Apple, Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">C. A. Wood</div>
+<div class="org">Apple, Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">M. Raykova</div>
+<div class="org">Google</div>
+</div>
+<div class="author">
+      <div class="author-name">S. Schlesinger</div>
+<div class="org">Google</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Anonymous Tokens with Hidden Metadata</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document specifies the Anonymous Tokens with Hidden Metadata (ATHM) protocol, a protocol
+for constructing Privacy Pass like tokens with hidden metadata embedded within it unknown
+to the client.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://cathieyun.github.io/draft-athm/draft-yun-cfrg-athm.html">https://cathieyun.github.io/draft-athm/draft-yun-cfrg-athm.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-yun-cfrg-athm/">https://datatracker.ietf.org/doc/draft-yun-cfrg-athm/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        Crypto Forum Research Group mailing list (<span><a href="mailto:cfrg@ietf.org">mailto:cfrg@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/cfrg">https://mailarchive.ietf.org/arch/browse/cfrg</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/cfrg/">https://www.ietf.org/mailman/listinfo/cfrg/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/cathieyun/draft-athm">https://github.com/cathieyun/draft-athm</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 14 February 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2025 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-notation-and-terminology" class="internal xref">Notation and Terminology</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-preliminaries" class="internal xref">Preliminaries</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-prime-order-group" class="internal xref">Prime-Order Group</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-ciphersuites" class="internal xref">Ciphersuites</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-athmp-256" class="internal xref">ATHM(P-256)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-random-scalar-generation" class="internal xref">Random Scalar Generation</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="auto internal xref">4.2.1</a>.  <a href="#name-rejection-sampling" class="internal xref">Rejection Sampling</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.2">
+                    <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="auto internal xref">4.2.2</a>.  <a href="#name-random-number-generation-us" class="internal xref">Random Number Generation Using Extra Random Bits</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-anonymous-token-with-hidden" class="internal xref">Anonymous Token with Hidden Metadata Protocol</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-key-generation-and-context-" class="internal xref">Key Generation and Context Setup</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.1">
+                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-public-key-proof" class="internal xref">Public Key Proof</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-athm-protocol" class="internal xref">ATHM Protocol</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-tokenrequest" class="internal xref">TokenRequest</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-tokenresponse" class="internal xref">TokenResponse</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.1">
+                    <p id="section-toc.1-1.5.2.4.2.1.1"><a href="#section-5.4.1" class="auto internal xref">5.4.1</a>.  <a href="#name-finalizetoken" class="internal xref">FinalizeToken</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.2">
+                    <p id="section-toc.1-1.5.2.4.2.2.1"><a href="#section-5.4.2" class="auto internal xref">5.4.2</a>.  <a href="#name-verifytoken" class="internal xref">VerifyToken</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-test-vectors" class="internal xref">Test Vectors</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#appendix-B.1" class="auto internal xref"></a><a href="#name-athmp-256-2" class="internal xref">ATHM(P-256)</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">This document presents a construction for Anonymous Tokens with Hidden Metadata (ATHM).
+ATHM is a cryptographic primitive that enables an issuer to issue an authentication
+token to a client in a way that the token carries no information about the client
+identity except a hidden metadata value the issuer sets during issuance. The value
+of the hidden metadata comes from a fixed domain and the client can verify this property
+of the hidden metadata of the token it receives. The metadata value remains hidden with
+respect to any party which does not have the secret key for the ATHM construction,
+including the client. Only the issuer who has the secret for the construction can verify
+the token and read the hidden metadata value.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Similarly to public metadata proposed in the context of existing anonymous tokens schemes,
+the hidden metadata enables the issuer to partition clients into a number of groups proportional
+to the domain of the hidden metadata. During token redemption the issuer can identify which group
+the client belongs to based on the metadata value. The difference from public metadata is that
+this value of hidden metadata is only readable by the issuer who has the ATHM secret key,
+while public metadata embedded in the token is visible to everyone.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Anonymous tokens are used for client authentication and their meaning is to convey trust
+in the client. In most cases the trust assigned to a client is determined based on the outcome
+of fraud and spam detection processes. It is often crucial that the signals used to obtain
+the verdict and the verdict itself remain hidden from the adversary, who can adapt its behavior
+to avoid detection if it knows when and why its behavior has been identified as fraudulent.
+ATHM can provide the means to issue authentication tokens that provide limited hidden fraud
+signals while preserving strong anonymity guarantees.<a href="#section-1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="conventions-and-definitions">
+<section id="section-2">
+      <h2 id="name-conventions-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      </h2>
+<div id="notation-and-terminology">
+<section id="section-2.1">
+        <h3 id="name-notation-and-terminology">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-notation-and-terminology" class="section-name selfRef">Notation and Terminology</a>
+        </h3>
+<p id="section-2.1-1">The following functions and notation are used throughout the document.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-2.1">
+            <p id="section-2.1-2.1.1">For any object <code>x</code>, we write <code>len(x)</code> to denote its length in bytes.<a href="#section-2.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-2.2">
+            <p id="section-2.1-2.2.1">For two byte arrays <code>x</code> and <code>y</code>, write <code>x || y</code> to denote their
+concatenation.<a href="#section-2.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-2.3">
+            <p id="section-2.1-2.3.1">I2OSP(x, xLen): Converts a non-negative integer <code>x</code> into a byte array
+of specified length <code>xLen</code> as described in <span>[<a href="#RFC8017" class="cite xref">RFC8017</a>]</span>. Note that
+this function returns a byte array in big-endian byte order.<a href="#section-2.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-2.4">
+            <p id="section-2.1-2.4.1">The notation <code>T U[N]</code> refers to an array called U containing N items of type
+T. The type <code>opaque</code> means one single byte of uninterpreted data. Items of
+the array are zero-indexed and referred as <code>U[j]</code> such that 0 &lt;= j &lt; N.<a href="#section-2.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.1-3">All algorithms and procedures described in this document are laid out
+in a Python-like pseudocode. Each function takes a set of inputs and parameters
+and produces a set of output values. Parameters become constant values once the
+protocol variant and the ciphersuite are fixed.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">String values such as "CredentialRequest", "CredentialResponse", and "Presentation" are ASCII string literals.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-5">The <code>PrivateInput</code> data type refers to inputs that are known only to the client
+in the protocol, whereas the <code>PublicInput</code> data type refers to inputs that are
+known to both client and server in the protocol.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.1-6">The following terms are used throughout this document.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-7.1">
+            <p id="section-2.1-7.1.1">Client: Protocol initiator. Creates an encrypted request, and uses the
+corresponding server encrypted issuance to make a presentation.<a href="#section-2.1-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-7.2">
+            <p id="section-2.1-7.2.1">Server: Computes an encrypted issuance for an encrypted request, with its
+server private keys. Later the server can verify the client's presentations
+with its private keys. Learns nothing about the client's secret attributes,
+and cannot link a client's issuance and presentation steps.<a href="#section-2.1-7.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="preliminaries">
+<section id="section-3">
+      <h2 id="name-preliminaries">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-preliminaries" class="section-name selfRef">Preliminaries</a>
+      </h2>
+<p id="section-3-1">The construction in this document has two primary dependencies:<a href="#section-3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-2.1">
+          <p id="section-3-2.1.1"><code>Group</code>: A prime-order group implementing the API described below in <a href="#pog" class="auto internal xref">Section 3.1</a>.
+See <a href="#ciphersuites" class="auto internal xref">Section 4</a> for specific instances of groups.<a href="#section-3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-2.2">
+          <p id="section-3-2.2.1"><code>Hash</code>: A cryptographic hash function whose output length is <code>Nh</code> bytes.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-3-3"><a href="#ciphersuites" class="auto internal xref">Section 4</a> specifies ciphersuites as combinations of <code>Group</code> and <code>Hash</code>.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<div id="pog">
+<section id="section-3.1">
+        <h3 id="name-prime-order-group">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-prime-order-group" class="section-name selfRef">Prime-Order Group</a>
+        </h3>
+<p id="section-3.1-1">In this document, we assume the construction of an additive, prime-order
+group <code>Group</code> for performing all mathematical operations. In prime-order groups,
+any element (other than the identity) can generate the other elements of the
+group. Usually, one element is fixed and defined as the group generator.
+In the KVAC setting, there are two fixed generator elements (generatorG, generatorH).
+Such groups are uniquely determined by the choice of the prime <code>p</code> that defines the
+order of the group. (There may, however, exist different representations
+of the group for a single <code>p</code>. <a href="#ciphersuites" class="auto internal xref">Section 4</a> lists specific groups which
+indicate both order and representation.)<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">The fundamental group operation is addition <code>+</code> with identity element
+<code>I</code>. For any elements <code>A</code> and <code>B</code> of the group, <code>A + B = B + A</code> is
+also a member of the group. Also, for any <code>A</code> in the group, there exists an element
+<code>-A</code> such that <code>A + (-A) = (-A) + A = I</code>. Scalar multiplication by <code>r</code> is
+equivalent to the repeated application of the group operation on an
+element A with itself <code>r-1</code> times, this is denoted as <code>r*A = A + ... + A</code>.
+For any element <code>A</code>, <code>p*A=I</code>. The case when the scalar multiplication is
+performed on the group generator is denoted as <code>ScalarMultGen(r)</code>.
+Given two elements A and B, the discrete logarithm problem is to find
+an integer k such that B = k*A. Thus, k is the discrete logarithm of
+B with respect to the base A.
+The set of scalars corresponds to <code>GF(p)</code>, a prime field of order p, and are
+represented as the set of integers defined by <code>{0, 1, ..., p-1}</code>.
+This document uses types
+<code>Element</code> and <code>Scalar</code> to denote elements of the group and its set of
+scalars, respectively.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">We now detail a number of member functions that can be invoked on a
+prime-order group.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-4.1">
+            <p id="section-3.1-4.1.1">Order(): Outputs the order of the group (i.e. <code>p</code>).<a href="#section-3.1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.2">
+            <p id="section-3.1-4.2.1">Identity(): Outputs the identity element of the group (i.e. <code>I</code>).<a href="#section-3.1-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.3">
+            <p id="section-3.1-4.3.1">Generators(): Outputs the generator elements of the group, (generatorG, generatorH)
+generatorG = Group.generator
+generatorH = HashToGroup(SerializeElement(generatorG), "generatorH"). The
+group member functions GeneratorG() and GeneratorH() are shorthand for
+returning generatorG and generatorH, respectively.<a href="#section-3.1-4.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.4">
+            <p id="section-3.1-4.4.1">HashToGroup(x, info): Deterministically maps
+an array of bytes <code>x</code> with domain separation value <code>info</code> to an element of <code>Group</code>. The map must ensure that,
+for any adversary receiving <code>R = HashToGroup(x, info)</code>, it is
+computationally difficult to reverse the mapping.
+Security properties of this function are described
+in <span>[<a href="#I-D.irtf-cfrg-hash-to-curve" class="cite xref">I-D.irtf-cfrg-hash-to-curve</a>]</span>.<a href="#section-3.1-4.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.5">
+            <p id="section-3.1-4.5.1">HashToScalar(x, info): Deterministically maps
+an array of bytes <code>x</code> with domain separation value <code>info</code> to an element in GF(p).
+Security properties of this function are described in <span>[<a href="#I-D.irtf-cfrg-hash-to-curve" class="cite xref">I-D.irtf-cfrg-hash-to-curve</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-hash-to-curve-16#section-10.5" class="relref">Section 10.5</a></span>.<a href="#section-3.1-4.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.6">
+            <p id="section-3.1-4.6.1">RandomScalar(): Chooses at random a non-zero element in GF(p).<a href="#section-3.1-4.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.7">
+            <p id="section-3.1-4.7.1">ScalarInverse(s): Returns the inverse of input <code>Scalar</code> <code>s</code> on <code>GF(p)</code>.<a href="#section-3.1-4.7.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.8">
+            <p id="section-3.1-4.8.1">SerializeElement(A): Maps an <code>Element</code> <code>A</code>
+to a canonical byte array <code>buf</code> of fixed length <code>Ne</code>.<a href="#section-3.1-4.8.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.9">
+            <p id="section-3.1-4.9.1">DeserializeElement(buf): Attempts to map a byte array <code>buf</code> to
+an <code>Element</code> <code>A</code>, and fails if the input is not the valid canonical byte
+representation of an element of the group. This function can raise a
+DeserializeError if deserialization fails or <code>A</code> is the identity element of
+the group; see <a href="#ciphersuites" class="auto internal xref">Section 4</a> for group-specific input validation steps.<a href="#section-3.1-4.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.10">
+            <p id="section-3.1-4.10.1">SerializeScalar(s): Maps a <code>Scalar</code> <code>s</code> to a canonical
+byte array <code>buf</code> of fixed length <code>Ns</code>.<a href="#section-3.1-4.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-4.11">
+            <p id="section-3.1-4.11.1">DeserializeScalar(buf): Attempts to map a byte array <code>buf</code> to a <code>Scalar</code> <code>s</code>.
+This function can raise a DeserializeError if deserialization fails; see
+<a href="#ciphersuites" class="auto internal xref">Section 4</a> for group-specific input validation steps.<a href="#section-3.1-4.11.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.1-5"><a href="#ciphersuites" class="auto internal xref">Section 4</a> contains details for the implementation of this interface
+for different prime-order groups instantiated over elliptic curves. In
+particular, for some choices of elliptic curves, e.g., those detailed in
+<span>[<a href="#RFC7748" class="cite xref">RFC7748</a>]</span>, which require accounting for cofactors, <a href="#ciphersuites" class="auto internal xref">Section 4</a>
+describes required steps necessary to ensure the resulting group is of
+prime order.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="ciphersuites">
+<section id="section-4">
+      <h2 id="name-ciphersuites">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-ciphersuites" class="section-name selfRef">Ciphersuites</a>
+      </h2>
+<p id="section-4-1">A ciphersuite (also referred to as 'suite' in this document) for the protocol
+wraps the functionality required for the protocol to take place. The
+ciphersuite should be available to both the client and server, and agreement
+on the specific instantiation is assumed throughout.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">A ciphersuite contains instantiations of the following functionalities:<a href="#section-4-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4-3.1">
+          <p id="section-4-3.1.1"><code>Group</code>: A prime-order Group exposing the API detailed in <a href="#pog" class="auto internal xref">Section 3.1</a>, with the
+generator element defined in the corresponding reference for each group. Each
+group also specifies HashToGroup, HashToScalar, and serialization
+functionalities. For
+HashToGroup, the domain separation tag (DST) is constructed in accordance
+with the recommendations in <span>[<a href="#I-D.irtf-cfrg-hash-to-curve" class="cite xref">I-D.irtf-cfrg-hash-to-curve</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-hash-to-curve-16#section-3.1" class="relref">Section 3.1</a></span>.
+For HashToScalar, each group specifies an integer order that is used in
+reducing integer values to a member of the corresponding scalar field.<a href="#section-4-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.2">
+          <p id="section-4-3.2.1"><code>Hash</code>: A cryptographic hash function whose output length is Nh bytes long.<a href="#section-4-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-4-4">This section includes an initial set of ciphersuites with supported groups
+and hash functions. It also includes implementation details for each ciphersuite,
+focusing on input validation.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">For each ciphersuite, <code>contextString</code> is that which is computed in the Setup functions.
+Applications should take caution in using ciphersuites targeting P-256 and ristretto255.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<div id="athmp-256">
+<section id="section-4.1">
+        <h3 id="name-athmp-256">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-athmp-256" class="section-name selfRef">ATHM(P-256)</a>
+        </h3>
+<p id="section-4.1-1">This ciphersuite uses P-256 <span>[<a href="#NISTCurves" class="cite xref">NISTCurves</a>]</span> for the Group.
+The value of the ciphersuite identifier is "P256".<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.1-2.1">
+            <p id="section-4.1-2.1.1">Group: P-256 (secp256r1) <span>[<a href="#NISTCurves" class="cite xref">NISTCurves</a>]</span><a href="#section-4.1-2.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.1-2.1.2.1">
+                <p id="section-4.1-2.1.2.1.1">Order(): Return 0xffffffff00000000ffffffffffffffffbce6faada7179e84f3b9cac2fc632551.<a href="#section-4.1-2.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.2">
+                <p id="section-4.1-2.1.2.2.1">Identity(): As defined in <span>[<a href="#NISTCurves" class="cite xref">NISTCurves</a>]</span>.<a href="#section-4.1-2.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.3">
+                <p id="section-4.1-2.1.2.3.1">Generator(): As defined in <span>[<a href="#NISTCurves" class="cite xref">NISTCurves</a>]</span>.<a href="#section-4.1-2.1.2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.4">
+                <p id="section-4.1-2.1.2.4.1">RandomScalar(): Implemented by returning a uniformly random Scalar in the range
+[0, <code>G.Order()</code> - 1]. Refer to <a href="#random-scalar" class="auto internal xref">Section 4.2</a> for implementation guidance.<a href="#section-4.1-2.1.2.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.5">
+                <p id="section-4.1-2.1.2.5.1">HashToGroup(x, info): Use hash_to_curve with suite P256_XMD:SHA-256_SSWU_RO_
+<span>[<a href="#I-D.irtf-cfrg-hash-to-curve" class="cite xref">I-D.irtf-cfrg-hash-to-curve</a>]</span>, input <code>x</code>, and DST =
+"HashToGroup-" || contextString || info.<a href="#section-4.1-2.1.2.5.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.6">
+                <p id="section-4.1-2.1.2.6.1">HashToScalar(x, info): Use hash_to_field from <span>[<a href="#I-D.irtf-cfrg-hash-to-curve" class="cite xref">I-D.irtf-cfrg-hash-to-curve</a>]</span>
+using L = 48, <code>expand_message_xmd</code> with SHA-256, input <code>x</code> and
+DST = "HashToScalar-" || contextString || info, and
+prime modulus equal to <code>Group.Order()</code>.<a href="#section-4.1-2.1.2.6.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.7">
+                <p id="section-4.1-2.1.2.7.1">ScalarInverse(s): Returns the multiplicative inverse of input Scalar <code>s</code> mod <code>Group.Order()</code>.<a href="#section-4.1-2.1.2.7.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.8">
+                <p id="section-4.1-2.1.2.8.1">SerializeElement(A): Implemented using the compressed Elliptic-Curve-Point-to-Octet-String
+method according to <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span>; Ne = 33.<a href="#section-4.1-2.1.2.8.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.9">
+                <p id="section-4.1-2.1.2.9.1">DeserializeElement(buf): Implemented by attempting to deserialize a 33-byte array to
+a public key using the compressed Octet-String-to-Elliptic-Curve-Point method according to <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span>,
+and then performs partial public-key validation as defined in section 5.6.2.3.4 of
+<span>[<a href="#KEYAGREEMENT" class="cite xref">KEYAGREEMENT</a>]</span>. This includes checking that the
+coordinates of the resulting point are in the correct range, that the point is on
+the curve, and that the point is not the point at infinity. Additionally, this function
+validates that the resulting element is not the group identity element.
+If these checks fail, deserialization returns an InputValidationError error.<a href="#section-4.1-2.1.2.9.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.10">
+                <p id="section-4.1-2.1.2.10.1">SerializeScalar(s): Implemented using the Field-Element-to-Octet-String conversion
+according to <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span>; Ns = 32.<a href="#section-4.1-2.1.2.10.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-4.1-2.1.2.11">
+                <p id="section-4.1-2.1.2.11.1">DeserializeScalar(buf): Implemented by attempting to deserialize a Scalar from a 32-byte
+string using Octet-String-to-Field-Element from <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span>. This function can fail if the
+input does not represent a Scalar in the range [0, <code>G.Order()</code> - 1].<a href="#section-4.1-2.1.2.11.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+        </ul>
+</section>
+</div>
+<div id="random-scalar">
+<section id="section-4.2">
+        <h3 id="name-random-scalar-generation">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-random-scalar-generation" class="section-name selfRef">Random Scalar Generation</a>
+        </h3>
+<p id="section-4.2-1">Two popular algorithms for generating a random integer uniformly distributed in
+the range [0, G.Order() -1] are as follows:<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<div id="rejection-sampling">
+<section id="section-4.2.1">
+          <h4 id="name-rejection-sampling">
+<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-rejection-sampling" class="section-name selfRef">Rejection Sampling</a>
+          </h4>
+<p id="section-4.2.1-1">Generate a random byte array with <code>Ns</code> bytes, and attempt to map to a Scalar
+by calling <code>DeserializeScalar</code> in constant time. If it succeeds, return the
+result. If it fails, try again with another random byte array, until the
+procedure succeeds. Failure to implement <code>DeserializeScalar</code> in constant time
+can leak information about the underlying corresponding Scalar.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-2">As an optimization, if the group order is very close to a power of
+2, it is acceptable to omit the rejection test completely.  In
+particular, if the group order is p, and there is an integer b
+such that |p - 2<sup>b</sup>| is less than 2<sup>(b/2)</sup>, then
+<code>RandomScalar</code> can simply return a uniformly random integer of at
+most b bits.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="random-number-generation-using-extra-random-bits">
+<section id="section-4.2.2">
+          <h4 id="name-random-number-generation-us">
+<a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-random-number-generation-us" class="section-name selfRef">Random Number Generation Using Extra Random Bits</a>
+          </h4>
+<p id="section-4.2.2-1">Generate a random byte array with <code>L = ceil(((3 * ceil(log2(G.Order()))) / 2) / 8)</code>
+bytes, and interpret it as an integer; reduce the integer modulo <code>G.Order()</code> and return the
+result. See <span>[<a href="#I-D.irtf-cfrg-hash-to-curve" class="cite xref">I-D.irtf-cfrg-hash-to-curve</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-hash-to-curve-16#section-5" class="relref">Section 5</a></span> for the underlying derivation of <code>L</code>.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="anonymous-token-with-hidden-metadata-protocol">
+<section id="section-5">
+      <h2 id="name-anonymous-token-with-hidden">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-anonymous-token-with-hidden" class="section-name selfRef">Anonymous Token with Hidden Metadata Protocol</a>
+      </h2>
+<p id="section-5-1">TODO(caw): writeme<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="setup">
+<section id="section-5.1">
+        <h3 id="name-key-generation-and-context-">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-key-generation-and-context-" class="section-name selfRef">Key Generation and Context Setup</a>
+        </h3>
+<p id="section-5.1-1">In the offline phase, the server generates a public and private key using the KeyGen routine below.
+The type PublicKeyProof and the function CreatePublicKeyProof are specified in <a href="#public-key-proof" class="auto internal xref">Section 5.1.1</a>.
+Further, they must agree on a string <code>deploymentId</code> and a number of buckets <code>nBuckets</code>. The <code>contextString</code>
+as used in <code>HashToGroup</code> and <code>HashToCurve</code> is <code>ATHMV1-&lt;group-name&gt;-&lt;nBuckets&gt;-&lt;deploymentId&gt;</code>. An
+example of <code>contextString</code> is <code>ATHMV1-P256-4-example_deployment_id</code>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.1-2">
+<pre>
+Input: None
+Output:
+- privateKey:
+  - x: Scalar
+  - y: Scalar
+  - z: Scalar
+  - r_x: Scalar
+  - r_y: Scalar
+- publicKey:
+  - Z: Element
+  - C_x: Element
+  - C_y: Element
+- pi: PublicKeyProof
+
+Parameters
+- Group G
+
+def KeyGen():
+  x = G.RandomScalar()
+  y = G.RandomNonzeroScalar()
+  z = G.RandomNonzeroScalar()
+  r_x = G.RandomScalar()
+  r_y = G.RandomScalar()
+
+  Z = z * G.GeneratorG()
+  C_x = (x * G.GeneratorG()) + (r_x * G.GeneratorH())
+  C_y = (y * G.GeneratorG()) + (r_y * G.GeneratorH())
+  pi = CreatePublicKeyProof(z, Z)
+
+  return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y), pi)
+</pre><a href="#section-5.1-2" class="pilcrow">¶</a>
+</div>
+<div id="public-key-proof">
+<section id="section-5.1.1">
+          <h4 id="name-public-key-proof">
+<a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-public-key-proof" class="section-name selfRef">Public Key Proof</a>
+          </h4>
+<p id="section-5.1.1-1">The server public key carries with it a zero-knowledge proof of knowledge
+of the corresponding private key. Clients verify this proof before using
+the public key for token issuance. The procedures for creating and verifying
+this proof, CreatePublicKeyProof and VerifyPublicKeyProof, are detailed below.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.1.1-2">
+<pre>
+Input:
+- z: Scalar
+- Z: Element
+
+Output:
+- pi: PublicKeyProof
+  - e: Scalar
+  - a_z: Scalar
+
+Parameters
+- Group G
+
+def CreatePublicKeyProof(z, Z):
+  rho_z = G.RandomScalar()
+  gamma_z = rho_z * G.GeneratorG()
+
+  ser_genG = G.SerializeElement(G.GeneratorG())
+  ser_Z = G.SerializeElement(Z)
+  ser_gamma_z = G.SerializeElement(gamma_big_z)
+
+  challenge_transcript =
+    I2OSP(len(ser_genG), 2) + ser_genG +
+    I2OSP(len(ser_Z), 2) + ser_Z +
+    I2OSP(len(ser_gamma_z), 2) + ser_gamma_z
+
+  e = G.HashToScalar(challenge_transcript, "KeyCommitments")
+  a_z = rho_z - (e * z)
+
+  return PublicKeyProof(e, a_z)
+</pre><a href="#section-5.1.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.1.1-3">The output of CreatePublicKeyProof is a value of type PublicKeyProof,
+which is wire-encoded as the concatenation of the <code>e</code> and <code>a_z</code> values,
+both serialized using SerializeScalar, yielding the following format:<a href="#section-5.1.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.1.1-4">
+<pre>
+struct {
+  uint8 e_enc[Ns];
+  uint8 a_z_enc[Ns];
+} PublicKeyProof;
+</pre><a href="#section-5.1.1-4" class="pilcrow">¶</a>
+</div>
+<p id="section-5.1.1-5">The VerifyPublicKeyProof routine, which takes as input a server public key, is below.<a href="#section-5.1.1-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.1.1-6">
+<pre>
+Input:
+- publicKey:
+  - Z: Element
+  - C_x: Element
+  - C_y: Element
+- pi: PublicKeyProof
+
+Output:
+- publicKey if valid, False otherwise
+
+def VerifyPublicKeyProof(publicKey, pi):
+  gamma_z = (pi.e * publicKey.Z) +
+    (pi.a_z * G.GeneratorG())
+
+  ser_genG = G.SerializeElement(G.GeneratorG())
+  ser_Z = G.SerializeElement(Z)
+  ser_gamma_z = G.SerializeElement(gamma_big_z)
+
+  challenge_transcript =
+    I2OSP(len(ser_genG), 2) + ser_genG +
+    I2OSP(len(ser_Z), 2) + ser_Z +
+    I2OSP(len(ser_gamma_z), 2) + ser_gamma_z
+
+  e_verify = G.HashToScalar(challenge_transcript, "KeyCommitments")
+  if e_verify == e:
+    return publicKey
+  return False
+</pre><a href="#section-5.1.1-6" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="athm-protocol">
+<section id="section-5.2">
+        <h3 id="name-athm-protocol">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-athm-protocol" class="section-name selfRef">ATHM Protocol</a>
+        </h3>
+<p id="section-5.2-1">The ATHM Protocol is a two-party protocol between a client and server where
+they interact to compute<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-2">
+<pre>
+token = F(privateKey, publicKey, hiddenMetadata)
+</pre><a href="#section-5.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2-3">where privateKey and publicKey contains the server's private and public keys, respectively
+(and generated as described in <a href="#setup" class="auto internal xref">Section 5.1</a>), and hiddenMetadata is an application-specific value
+known only to the server.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">The protocol begins with the client making a token request using the verified server public key.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-5">
+<pre>
+verifiedPublicKey = VerifyPublicKeyProof(publicKey, pi)
+(context, request) = TokenRequest(verifiedPublicKey)
+</pre><a href="#section-5.2-5" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2-6">The client then sends <code>request</code> to the server. If the request is well-formed, the server computes a token response with the server private keys and hidden metadata. The response includes a proof that the token response is valid with respect to the server keys, and a maximum number of buckets for the hidden metadata.<a href="#section-5.2-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-7">
+<pre>
+response = CredentialResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
+</pre><a href="#section-5.2-7" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2-8">The server sends the response to the client. The client processes the response by verifying the response proof. If the proof verifies correctly, the client computes a token from its context and the server response:<a href="#section-5.2-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-9">
+<pre>
+token = FinalizeToken(context, verifiedPublicKey, request, response, nBuckets)
+</pre><a href="#section-5.2-9" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2-10">When the client presents the token to the server for redemption, the server verifies it using its private keys, as follows:<a href="#section-5.2-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-11">
+<pre>
+hiddenMetadata = VerifyToken(privateKey, token, nBuckets)
+</pre><a href="#section-5.2-11" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2-12">This process fails if the token is invalid, and otherwise returns the hidden metadata associated with the token during issuance.<a href="#section-5.2-12" class="pilcrow">¶</a></p>
+<p id="section-5.2-13">Shown graphically, the protocol runs as follows:<a href="#section-5.2-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-14">
+<pre>
+   Client(publicKey)                      Server(privateKey, publicKey, hiddenMetadata)
+         ---                                                  ---
+  verifiedPublicKey = VerifyPublicKeyProof(publicKey, pi)
+  (context, request) = TokenRequest(verifiedPublicKey)
+
+                                request
+                            ---------------&gt;
+
+                    response = TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
+
+                                response
+                            &lt;---------------
+
+  token = FinalizeToken(context, verifiedPublicKey, request, response, nBuckets)
+
+     ....
+
+                                  token
+                            -------------------&gt;
+
+                    hiddenMetadata = VerifyToken(privateKey, token, nBuckets)
+</pre><a href="#section-5.2-14" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2-15">In the remainder of this section, we specify the TokenRequest, TokenResponse,
+FinalizeToken, and VerifyToken functions that are used in this protocol.<a href="#section-5.2-15" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="tokenrequest">
+<section id="section-5.3">
+        <h3 id="name-tokenrequest">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-tokenrequest" class="section-name selfRef">TokenRequest</a>
+        </h3>
+<p id="section-5.3-1">The TokenRequest function is defined below.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.3-2">
+<pre>
+Inputs:
+- verifiedPublicKey:
+  - Z: Element
+  - C_x: Element
+  - C_y: Element
+
+Outputs:
+- context:
+  - r: Scalar
+  - tc: Scalar
+- request:
+  - T: Element
+
+Parameters:
+- G: Group
+
+def TokenRequest(client):
+  r = G.RandomScalar()
+  tc = G.RandomScalar()
+  T = (r * G.GeneratorG()) + (tc * verifiedPublicKey.Z)
+  return context(r, tc), request(T)
+</pre><a href="#section-5.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.3-3">The output <code>request</code> from this function is wire-encoded into <code>Nrequest=Ne</code> bytes as follows:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.3-4">
+<pre>
+struct {
+  uint8 T_enc[Ne];
+}
+</pre><a href="#section-5.3-4" class="pilcrow">¶</a>
+</div>
+<p id="section-5.3-5">The <code>T_enc</code> field is the serialized representation of <code>request.T</code>.<a href="#section-5.3-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="tokenresponse">
+<section id="section-5.4">
+        <h3 id="name-tokenresponse">
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-tokenresponse" class="section-name selfRef">TokenResponse</a>
+        </h3>
+<p id="section-5.4-1">The TokenResponse function is defined below.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<div class="lang-pseudocode sourcecode" id="section-5.4-2">
+<pre>
+Inputs:
+- privateKey:
+  - x: Scalar
+  - y: Scalar
+  - z: Scalar
+  - r_x: Scalar
+  - r_y: Scalar
+- publicKey:
+  - Z: Element
+  - C_x: Element
+  - C_y: Element
+- request:
+  - T: Element
+- hiddenMetadata: Integer
+- nBuckets: Integer
+
+Outputs:
+- response:
+  - U: Element
+  - V: Element
+  - ts: Scalar
+  - pi: IssuanceProof
+
+Parameters:
+- G: Group
+
+def TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets):
+  ts = G.RandomScalar()
+  d = G.RandomNonzeroScalar()
+
+  U = d * G.GeneratorG()
+  X = privateKey.x * GeneratorG()
+  Y = privateKey.y * GeneratorG()
+  V = d * (X + (hiddenMetadata * Y) + (ts * publicKey.Z) + request.T)
+
+  pi = CreateIssuanceProof(privateKey, publicKey, hiddenMetadata, nBuckets, d, U, V, ts, T)
+
+  return response(U, V, ts, pi)
+</pre><a href="#section-5.4-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4-3">The output <code>response</code> from this function is wire-encoded into <code>Nresponse=Ne+Ne+Ns+Nproof</code> bytes as follows:<a href="#section-5.4-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4-4">
+<pre>
+struct {
+  uint8 U_enc[Ne];
+  uint8 V_enc[Ne];
+  uint8 ts_enc[Ns];
+  uint8 pi_enc[Nproof];
+}
+</pre><a href="#section-5.4-4" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4-5">The <code>U_enc</code>, <code>V_enc</code>, and <code>ts_enc</code> fields are the serialized representations
+of <code>response.U</code>, <code>response.V</code>, and <code>response.ts</code>, respectively.
+The <code>pi_enc</code> field is the serialized IssuanceProof, as defined below.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
+<p id="section-5.4-6">The CreateIssuanceProof function is defined below.<a href="#section-5.4-6" class="pilcrow">¶</a></p>
+<div class="breakable lang-pseudocode sourcecode" id="section-5.4-7">
+<pre>
+Inputs:
+- privateKey:
+  - x: Scalar
+  - y: Scalar
+  - z: Scalar
+  - r_x: Scalar
+  - r_y: Scalar
+- publicKey:
+  - Z: Element
+  - C_x: Element
+  - C_y: Element
+- hiddenMetadata: Integer
+- nBuckets: Integer
+- d: Scalar
+- U: Element
+- V: Element
+- ts: Scalar
+- T: Element
+
+Output:
+- pi: IssuanceProof
+  - C: Element
+  - e: [Scalar]
+  - a: [Scalar]
+  - a_d: Scalar
+  - a_rho: Scalar
+  - a_w: Scalar
+
+Parameters:
+- G: Group
+
+def CreateIssuanceProof(privateKey, publicKey, hiddenMetadata, nBuckets, d, U, V, ts, T):
+  e_vec = [G.RandomScalar() for i in range(nBuckets)]
+  e_vec[hiddenMetadata] = Scalar(0) # zero for now - will be calculated and set later.
+  a_vec = [G.RandomScalar() for i in range(nBuckets)]
+  a_vec[hiddenMetadata] = Scalar(0) # zero for now - will be calculated and set later.
+  r_mu = G.RandomScalar()
+  r_d = G.RandomScalar()
+  r_rho = G.RandomScalar()
+  r_w = G.RandomScalar()
+  mu = G.RandomScalar()
+
+  C = hiddenMetadata * publicKey.C_y + mu * G.GeneratorH()
+  C_vec = []
+  for i in range(nBuckets):
+    if i == hiddenMetadata:
+      # This is the actual C[i] value for the "correct" slot (i == hiddenMetadata)
+      C_vec.append(r_mu * G.GeneratorH())
+    else:
+      # This is the simulated C[i] value for the "incorrect" slot (i != hiddenMetadata)
+      C_vec.append(a_vec[i] * G.GeneratorH() - e_vec[i] * (C - (i * pk.C_y)))
+  C_d = r_d * U
+  C_rho = (r_d * V) + (r_rho * G.GeneratorH())
+  C_w = (r_d * V) + (r_w * G.GeneratorG())
+
+  ser_genG = G.SerializeElement(G.GeneratorG())
+  ser_genH = G.SerializeElement(G.GeneratorH())
+  ser_C_x = G.SerializeElement(publicKey.C_x)
+  ser_C_y = G.SerializeElement(publicKey.C_y)
+  ser_Z = G.SerializeElement(publicKey.Z)
+  ser_U = G.SerializeElement(U)
+  ser_V = G.SerializeElement(V)
+  ser_ts = G.SerializeScalar(ts)
+  ser_T = G.SerializeElement(T)
+  ser_C = G.SerializeElement(C)
+  ser_C_d = G.SerializeElement(C_d)
+  ser_C_rho = G.SerializeElement(C_rho)
+  ser_C_w = G.SerializeElement(C_w)
+
+  challenge_transcript = \
+    I2OSP(len(ser_genG), 2) + ser_genG + \
+    I2OSP(len(ser_genH), 2) + ser_genH + \
+    I2OSP(len(ser_C_x), 2) + ser_C_x + \
+    I2OSP(len(ser_C_y), 2) + ser_C_y + \
+    I2OSP(len(ser_Z), 2) + ser_Z + \
+    I2OSP(len(ser_U), 2) + ser_U + \
+    I2OSP(len(ser_V), 2) + ser_V + \
+    I2OSP(len(ser_ts), 2) + ser_ts + \
+    I2OSP(len(ser_T), 2) + ser_T + \
+    I2OSP(len(ser_C), 2) + ser_C
+  for i in range(nBuckets):
+    ser_C_i = G.SerializeElement(C_vec[i])
+    challenge_transcript.append(I2OSP(len(ser_C_i), 2) + ser_C_i)
+  challenge_transcript.append( \
+    I2OSP(len(ser_C_d), 2) + ser_C_d + \
+    I2OSP(len(ser_C_rho), 2) + ser_C_rho + \
+    I2OSP(len(ser_C_w), 2) + ser_C_w
+  )
+
+  e = G.HashToScalar(challenge_transcript, "TokenResponseProof")
+  # Set the correct e_vec[hiddenMetadata] value.
+  e_vec[hiddenMetadata] = e - sum(e_vec)
+
+  d_inv = G.ScalarInverse(d)
+  rho = -(privateKey.r_x + (hiddenMetadata * privateKey.r_y) + mu)
+  w = privateKey.x + (hiddenMetadata * privateKey.y) + (ts * privateKey.z)
+
+  # Set the correct a_vec[hiddenMetadata] value.
+  a_vec[hiddenMetadata] = r_mu + (e_vec[hiddenMetadata] * mu)
+  a_d = r_d - (e * d_inv)
+  a_rho = r_rho + (e * rho)
+  a_w = r_w + (e * w)
+
+  return IssuanceProof(C, e_vec, a_vec, a_d, a_rho, a_w)
+</pre><a href="#section-5.4-7" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4-8">The output <code>pi</code> from this function is wire-encoded into <code>Nproof = Ne+(3+2*nBuckets)*Ns</code> bytes as follows:<a href="#section-5.4-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4-9">
+<pre>
+struct {
+  uint8 C_enc[Ne];
+  [uint8] e_0_enc[Ns]...e_nBuckets_enc[Ns];
+  [uint8] a_0_enc[Ns]...a_nBuckets_enc[Ns];
+  uint8 a_d_enc[Ns];
+  uint8 a_rho_enc[Ns];
+  uint8 a_w_enc[Ns];
+}
+</pre><a href="#section-5.4-9" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4-10">The fields in this structure are the serialized representations of the contents of <code>pi</code>,
+e.g., <code>C_enc</code> is the serialized representation of <code>pi.C</code> and <code>e_0_enc</code> is the serialized representation of <code>e[0]</code>.<a href="#section-5.4-10" class="pilcrow">¶</a></p>
+<div id="finalizetoken">
+<section id="section-5.4.1">
+          <h4 id="name-finalizetoken">
+<a href="#section-5.4.1" class="section-number selfRef">5.4.1. </a><a href="#name-finalizetoken" class="section-name selfRef">FinalizeToken</a>
+          </h4>
+<p id="section-5.4.1-1">The FinalizeToken function is defined below. Internally, the client
+verifies the token response proof. FinalizeToken fails if this proof
+is invalid.<a href="#section-5.4.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.1-2">
+<pre>
+Inputs:
+- context:
+  - r: Scalar
+  - tc: Scalar
+- verifiedPublicKey:
+  - Z: Element
+  - C_x: Element
+  - C_y: Element
+- request:
+  - T: Element
+- response:
+  - U: Element
+  - V: Element
+  - ts: Scalar
+  - pi: IssuanceProof
+- nBuckets: Integer
+
+Outputs:
+- token:
+  - t: Scalar
+  - P: Element
+  - Q: Element
+
+Parameters:
+- G: Group
+
+Exceptions:
+- VerifyError, raised when response proof verification fails
+
+def FinalizeToken(context, verifiedPublicKey, request, response, nBuckets):
+  if VerifyIssuanceProof(verifiedPublicKey, request, response, nBuckets) == false:
+    raise VerifyError
+
+  c = G.RandomNonzeroScalar()
+  P = c * response.U
+  Q = c * (response.V - (context.r * response.U))
+  t = context.tc + response.ts
+
+  return token(t, P, Q)
+</pre><a href="#section-5.4.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.1-3">The resulting token can be serialized as the concatenation of <code>t</code>, <code>P</code>,
+and <code>Q</code> serialized using their respective serialization functions, yielding
+the following struct:<a href="#section-5.4.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.1-4">
+<pre>
+struct {
+  uint8 t_enc[Ns];
+  uint8 P_enc[Ne];
+  uint8 Q_enc[Ne];
+}
+</pre><a href="#section-5.4.1-4" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.1-5">The VerifyIssuanceProof function is defined below.<a href="#section-5.4.1-5" class="pilcrow">¶</a></p>
+<div class="breakable lang-pseudocode sourcecode" id="section-5.4.1-6">
+<pre>
+Inputs:
+- publicKey:
+  - Z: Element
+  - C_x: Element
+  - C_y: Element
+- T: Element
+- response:
+  - U: Element
+  - V: Element
+  - ts: Scalar
+  - pi: IssuanceProof
+- nBuckets: Integer
+
+Output:
+- True if valid, false otherwise
+
+Parameters:
+- G: Group
+
+def VerifyIssuanceProof(publicKey, T, response, nBuckets):
+  pi = response.pi
+
+  C_vec = []
+  for i in range(nBuckets):
+    C_i = pi.a_vec[i] * G.GeneratorH - (pi.e_vec[i] * (pi.C - (i * publicKey.C_y))
+
+  e = sum(pi.e_vec)
+
+  C_d = (response.pi.a_d * response.U) + (e * G.GeneratorG())
+
+  C_rho = (response.pi.a_d * response.V)
+      + (response.pi.a_rho * G.GeneratorH())
+      + (e * (publicKey.C_x + response.pi.C + (response.ts * publicKey.Z) + T))
+
+  C_w = (response.pi.a_d * response.V)
+      + (response.pi.a_w * G.GeneratorG())
+      + (e * T)
+
+  ser_genG = G.SerializeElement(G.GeneratorG())
+  ser_genH = G.SerializeElement(G.GeneratorH())
+  ser_C_x = G.SerializeElement(publicKey.C_x)
+  ser_C_y = G.SerializeElement(publicKey.C_y)
+  ser_Z = G.SerializeElement(publicKey.Z)
+  ser_U = G.SerializeElement(response.U)
+  ser_V = G.SerializeElement(response.V)
+  ser_ts = G.SerializeScalar(response.ts)
+  ser_T = G.SerializeElement(T)
+  ser_C = G.SerializeElement(pi.C)
+  ser_C_d = G.SerializeElement(C_d)
+  ser_C_rho = G.SerializeElement(C_rho)
+  ser_C_w = G.SerializeElement(C_w)
+
+  challenge_transcript = \
+    I2OSP(len(ser_genG), 2) + ser_genG + \
+    I2OSP(len(ser_genH), 2) + ser_genH + \
+    I2OSP(len(ser_C_x), 2) + ser_C_x + \
+    I2OSP(len(ser_C_y), 2) + ser_C_y + \
+    I2OSP(len(ser_Z), 2) + ser_Z + \
+    I2OSP(len(ser_U), 2) + ser_U + \
+    I2OSP(len(ser_V), 2) + ser_V + \
+    I2OSP(len(ser_ts), 2) + ser_ts + \
+    I2OSP(len(ser_T), 2) + ser_T + \
+    I2OSP(len(ser_C), 2) + ser_C + \
+  for i in range(nBuckets):
+    ser_C_i = G.SerializeElement(pi.C_vec[i])
+    challenge_transcript.append(I2OSP(len(ser_C_i), 2) + ser_C_i)
+  challenge_transcript.append( \
+    I2OSP(len(ser_C_d), 2) + ser_C_d + \
+    I2OSP(len(ser_C_rho), 2) + ser_C_rho + \
+    I2OSP(len(ser_C_w), 2) + ser_C_w
+  )
+
+  e_verify = G.HashToScalar(challenge_transcript, "TokenResponseProof")
+  return e == e_verify
+</pre><a href="#section-5.4.1-6" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="verifytoken">
+<section id="section-5.4.2">
+          <h4 id="name-verifytoken">
+<a href="#section-5.4.2" class="section-number selfRef">5.4.2. </a><a href="#name-verifytoken" class="section-name selfRef">VerifyToken</a>
+          </h4>
+<p id="section-5.4.2-1">The VerifyToken token is defined below.<a href="#section-5.4.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.2-2">
+<pre>
+Inputs:
+- privateKey:
+  - x: Scalar
+  - y: Scalar
+  - z: Scalar
+  - r_x: Scalar
+  - r_y: Scalar
+- token:
+  - t: Scalar
+  - P: Element
+  - Q: Element
+- nBuckets: Integer
+
+Outputs:
+- hiddenMetadata: Integer
+
+Parameters:
+- G: Group
+
+Exceptions:
+- VerifyError, raised when token verification fails
+
+def VerifyToken(privateKey, token, nBuckets):
+  if (token.P == token.P + token.P) || (token.Q == token.Q + token.Q):
+    raise VerifyError # P and Q should not be zero
+
+  iMatch = -1
+  for i in range(nBuckets):
+    Q_i = (privateKey.x + token.t * privateKey.z + i * privateKey.y) * token.P
+    if token.Q == Q_i:
+      if iMatch != -1:
+        raise VerifyError # Multiple metadata values match
+      iMatch = i
+
+  if iMatch != -1:
+    return iMatch
+  else:
+    raise VerifyError # No metadata values match
+</pre><a href="#section-5.4.2-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-6-1">TODO<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-7">
+      <h2 id="name-iana-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-7-1">This document has no IANA actions.<a href="#section-7-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-8">
+      <h2 id="name-references">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-8.1">
+        <h3 id="name-normative-references">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.irtf-cfrg-hash-to-curve">[I-D.irtf-cfrg-hash-to-curve]</dt>
+        <dd>
+<span class="refAuthor">Faz-Hernandez, A. F.</span>, <span class="refAuthor">Scott, S.</span>, <span class="refAuthor">Sullivan, N.</span>, <span class="refAuthor">Wahby, R. S.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Hashing to Elliptic Curves"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-hash-to-curve-16</span>, <time datetime="2022-06-15" class="refDate">15 June 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-hash-to-curve-16">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-hash-to-curve-16</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="KEYAGREEMENT">[KEYAGREEMENT]</dt>
+        <dd>
+<span class="refAuthor">Barker, E.</span>, <span class="refAuthor">Chen, L.</span>, <span class="refAuthor">Roginsky, A.</span>, <span class="refAuthor">Vassilev, A.</span>, and <span class="refAuthor">R. Davis</span>, <span class="refTitle">"Recommendation for pair-wise key-establishment schemes using discrete logarithm cryptography"</span>, <span class="refContent">National Institute of Standards and Technology</span>, <span class="seriesInfo">DOI 10.6028/nist.sp.800-56ar3</span>, <time datetime="2018-04" class="refDate">April 2018</time>, <span>&lt;<a href="https://doi.org/10.6028/nist.sp.800-56ar3">https://doi.org/10.6028/nist.sp.800-56ar3</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8017">[RFC8017]</dt>
+      <dd>
+<span class="refAuthor">Moriarty, K., Ed.</span>, <span class="refAuthor">Kaliski, B.</span>, <span class="refAuthor">Jonsson, J.</span>, and <span class="refAuthor">A. Rusch</span>, <span class="refTitle">"PKCS #1: RSA Cryptography Specifications Version 2.2"</span>, <span class="seriesInfo">RFC 8017</span>, <span class="seriesInfo">DOI 10.17487/RFC8017</span>, <time datetime="2016-11" class="refDate">November 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8017">https://www.rfc-editor.org/rfc/rfc8017</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-8.2">
+        <h3 id="name-informative-references">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="NISTCurves">[NISTCurves]</dt>
+        <dd>
+<span class="refTitle">"Digital signature standard (DSS)"</span>, <span class="refContent">National Institute of Standards and Technology (U.S.)</span>, <span class="seriesInfo">DOI 10.6028/nist.fips.186-4</span>, <time datetime="2013" class="refDate">2013</time>, <span>&lt;<a href="https://doi.org/10.6028/nist.fips.186-4">https://doi.org/10.6028/nist.fips.186-4</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7748">[RFC7748]</dt>
+        <dd>
+<span class="refAuthor">Langley, A.</span>, <span class="refAuthor">Hamburg, M.</span>, and <span class="refAuthor">S. Turner</span>, <span class="refTitle">"Elliptic Curves for Security"</span>, <span class="seriesInfo">RFC 7748</span>, <span class="seriesInfo">DOI 10.17487/RFC7748</span>, <time datetime="2016-01" class="refDate">January 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7748">https://www.rfc-editor.org/rfc/rfc7748</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SEC1">[SEC1]</dt>
+      <dd>
+<span class="refAuthor">Standards for Efficient Cryptography Group (SECG)</span>, <span class="refTitle">"SEC 1: Elliptic Curve Cryptography"</span>, <span>&lt;<a href="https://www.secg.org/sec1-v2.pdf">https://www.secg.org/sec1-v2.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-A">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="test-vectors">
+<section id="appendix-B">
+      <h2 id="name-test-vectors">
+<a href="#name-test-vectors" class="section-name selfRef">Test Vectors</a>
+      </h2>
+<p id="appendix-B-1">This section contains test vectors for the ATHM ciphersuites specified in this document.
+The test vectors were generated from the reference implementation located at
+https://github.com/google/anonymous-tokens/tree/3a6ca6cb8d6446396555c2c4dcd250fdc44a30b3/athm.
+All byte strings, except <code>deployment_id</code>, are encoded in hexadecimal.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<div id="athmp-256-1">
+<section id="appendix-B.1">
+        <h3 id="name-athmp-256-2">
+<a href="#name-athmp-256-2" class="section-name selfRef">ATHM(P-256)</a>
+        </h3>
+<div class="breakable lang-JSON sourcecode" id="appendix-B.1-1">
+<pre>
+[
+  {
+    "procedure": "params",
+    "args": {},
+    "output": {
+      "deployment_id": "test_vector_deployment_id",
+      "generator_g": "036b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296",
+      "generator_h": "02d73466fcabda2c1b397def318d7c41b8b542ef7e2cdf9fb7ad8f7bdd4f5893f4",
+      "n_buckets": "4"
+    }
+  },
+  {
+    "procedure": "key_gen",
+    "args": {
+      "rng_seed": "0101010101010101010101010101010101010101010101010101010101010101"
+    },
+    "output": {
+      "private_key": "023f37203a2476c42566a61cc55c3ca875dbb4cc41c0deb789f8e7bf881836381ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d01274dd1ee5216c204fb698daea45b52e98b6f0fdd046dcc3a86bb079e36f024147e4b875d59a9ef432b8e45b04a98c4b19dc8c7475f5dce4259b4ca2dd67282b478b8702c1d2569fe52e5d7dbadec6223cd10fd4b504dabac7fff23a37363d1",
+      "public_key": "032b80024ee818d709196780a84affe08789f571529fccc1acce07eea2df2fc65f02845b1c0438fb8e2590e4383ccc43c24cd4dae3bfc3cf84a4fa9f29db2ad3c70e038c996b6f806b6d0577e83459c04c6298d6155cfc9381640f630772cf514dfc65",
+      "public_key_proof": "3a02e17f246a47de057878788c4d5cee5eebe216a50217cab407ad41d76895b975b0885667b173a1d7954611ac846f3792c71a72450dc4f26962a4da50a272d5"
+    }
+  },
+  {
+    "procedure": "token_request",
+    "args": {
+      "public_key": "032b80024ee818d709196780a84affe08789f571529fccc1acce07eea2df2fc65f02845b1c0438fb8e2590e4383ccc43c24cd4dae3bfc3cf84a4fa9f29db2ad3c70e038c996b6f806b6d0577e83459c04c6298d6155cfc9381640f630772cf514dfc65",
+      "public_key_proof": "3a02e17f246a47de057878788c4d5cee5eebe216a50217cab407ad41d76895b975b0885667b173a1d7954611ac846f3792c71a72450dc4f26962a4da50a272d5",
+      "rng_seed": "0202020202020202020202020202020202020202020202020202020202020202"
+    },
+    "output": {
+      "token_context": "f6a12ca8ffc30a66ca140ccc7276336115819361186d3f535dd99f8eaaca8fce7f82dd63f4f75c33da444b72372be3aa43c0027a076bf9675eb7932695d127a4",
+      "token_request": "030a1b41e492728f4f59d368761e1ff568536ad2987fd5be6017c5043ed25b67ea"
+    }
+  },
+  {
+    "procedure": "token_response",
+    "args": {
+      "hidden_metadata": "3",
+      "private_key": "023f37203a2476c42566a61cc55c3ca875dbb4cc41c0deb789f8e7bf881836381ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d01274dd1ee5216c204fb698daea45b52e98b6f0fdd046dcc3a86bb079e36f024147e4b875d59a9ef432b8e45b04a98c4b19dc8c7475f5dce4259b4ca2dd67282b478b8702c1d2569fe52e5d7dbadec6223cd10fd4b504dabac7fff23a37363d1",
+      "public_key": "032b80024ee818d709196780a84affe08789f571529fccc1acce07eea2df2fc65f02845b1c0438fb8e2590e4383ccc43c24cd4dae3bfc3cf84a4fa9f29db2ad3c70e038c996b6f806b6d0577e83459c04c6298d6155cfc9381640f630772cf514dfc65",
+      "rng_seed": "0303030303030303030303030303030303030303030303030303030303030303",
+      "token_request": "030a1b41e492728f4f59d368761e1ff568536ad2987fd5be6017c5043ed25b67ea"
+    },
+    "output": {
+      "token_response": "0245db306e323313840a20233ad432aae1be784f96aa940b628d56914249ce4b8c0250ccea1818d4ecf3026ebca1845fbff1cd0089868bbfdecac1c77b9ef2b00480385553aa23a24b14d8bbc2dff606277f444e049797ae7e0404e3a9ba0ecef2fb028d5ba8ae37297b66e81e2feb09be335d2531ac6c7dca0f3620d564d64ee22b31ffb9e4ee66f5a203f5a31575fd70251b1cd922bcfaa87fc7c071df4412854ba49b424c1a1cded001b3ff8f0bc5306fa9950d236ce7075d9f702c3f0cd5546f8900a60c8dfef9f6633994aa4ed8b1ebd9111bcf05c62b39e9f7426edc7aab3fe685dff19268ca2592b2dbb074d0f83bbe58cf377f1450f384f96fc5f5b107c5c9a43052fa4d37c9836e498619b9fc1584381292d0b1ec6f952fc6bab8035f6b30478648a01804edaba38b5cf910a932567c48e78b724d57400edd6f98cd565835bb1f733e33dc6335d9283d288ada574131ba288318476415651c571eee8430a797624a1f51a66b320d80496f59facf53c58c6a421bad947c77253dc8d502a0928c45f4d5f7860f172472526553f3be456efa0903df8dd0da60ccf70245ccfaa3f3eee720cfae814543842d2950d2fe4c0825acf1fd79764e25d565ae0d453fc83d118eb77e6d4d98504dec71a67587c2453811fc907df3b40822aa0f072fee5e"
+    }
+  },
+  {
+    "procedure": "finalize_token",
+    "args": {
+      "public_key": "032b80024ee818d709196780a84affe08789f571529fccc1acce07eea2df2fc65f02845b1c0438fb8e2590e4383ccc43c24cd4dae3bfc3cf84a4fa9f29db2ad3c70e038c996b6f806b6d0577e83459c04c6298d6155cfc9381640f630772cf514dfc65",
+      "rng_seed": "0404040404040404040404040404040404040404040404040404040404040404",
+      "token_context": "f6a12ca8ffc30a66ca140ccc7276336115819361186d3f535dd99f8eaaca8fce7f82dd63f4f75c33da444b72372be3aa43c0027a076bf9675eb7932695d127a4",
+      "token_request": "030a1b41e492728f4f59d368761e1ff568536ad2987fd5be6017c5043ed25b67ea",
+      "token_response": "0245db306e323313840a20233ad432aae1be784f96aa940b628d56914249ce4b8c0250ccea1818d4ecf3026ebca1845fbff1cd0089868bbfdecac1c77b9ef2b00480385553aa23a24b14d8bbc2dff606277f444e049797ae7e0404e3a9ba0ecef2fb028d5ba8ae37297b66e81e2feb09be335d2531ac6c7dca0f3620d564d64ee22b31ffb9e4ee66f5a203f5a31575fd70251b1cd922bcfaa87fc7c071df4412854ba49b424c1a1cded001b3ff8f0bc5306fa9950d236ce7075d9f702c3f0cd5546f8900a60c8dfef9f6633994aa4ed8b1ebd9111bcf05c62b39e9f7426edc7aab3fe685dff19268ca2592b2dbb074d0f83bbe58cf377f1450f384f96fc5f5b107c5c9a43052fa4d37c9836e498619b9fc1584381292d0b1ec6f952fc6bab8035f6b30478648a01804edaba38b5cf910a932567c48e78b724d57400edd6f98cd565835bb1f733e33dc6335d9283d288ada574131ba288318476415651c571eee8430a797624a1f51a66b320d80496f59facf53c58c6a421bad947c77253dc8d502a0928c45f4d5f7860f172472526553f3be456efa0903df8dd0da60ccf70245ccfaa3f3eee720cfae814543842d2950d2fe4c0825acf1fd79764e25d565ae0d453fc83d118eb77e6d4d98504dec71a67587c2453811fc907df3b40822aa0f072fee5e"
+    },
+    "output": {
+      "token": "b7d8310e1899a748b3000e522d320b29880e07119f1a776b639b3ce0a4a01a9f02123d0c125de3d122577b335a8f6616d735e9400b60dcde57eff056e9cbbd2b3c03a062c5b41507e1fe089d0c3b4132d84ece1d4a9dfc0bf4f0588d660f25bdf6cf"
+    }
+  },
+  {
+    "procedure": "verify_token",
+    "args": {
+      "private_key": "023f37203a2476c42566a61cc55c3ca875dbb4cc41c0deb789f8e7bf881836381ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d01274dd1ee5216c204fb698daea45b52e98b6f0fdd046dcc3a86bb079e36f024147e4b875d59a9ef432b8e45b04a98c4b19dc8c7475f5dce4259b4ca2dd67282b478b8702c1d2569fe52e5d7dbadec6223cd10fd4b504dabac7fff23a37363d1",
+      "rng_seed": "0404040404040404040404040404040404040404040404040404040404040404",
+      "token": "b7d8310e1899a748b3000e522d320b29880e07119f1a776b639b3ce0a4a01a9f02123d0c125de3d122577b335a8f6616d735e9400b60dcde57eff056e9cbbd2b3c03a062c5b41507e1fe089d0c3b4132d84ece1d4a9dfc0bf4f0588d660f25bdf6cf"
+    },
+    "output": {
+      "hidden_metadata": "3"
+    }
+  }
+]
+</pre><a href="#appendix-B.1-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-C">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Cathie Yun</span></div>
+<div dir="auto" class="left"><span class="org">Apple, Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:cathieyun@gmail.com" class="email">cathieyun@gmail.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Christopher A. Wood</span></div>
+<div dir="auto" class="left"><span class="org">Apple, Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:caw@heapingbits.net" class="email">caw@heapingbits.net</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Mariana Raykova</span></div>
+<div dir="auto" class="left"><span class="org">Google</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:marianar@google.com" class="email">marianar@google.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Samuel Schlesinger</span></div>
+<div dir="auto" class="left"><span class="org">Google</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:sgschlesinger@gmail.com" class="email">sgschlesinger@gmail.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
