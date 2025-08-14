@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-10T00:49:09.637965+00:00",
+  "timestamp": "2025-08-14T00:41:43.203979+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -435,6 +435,68 @@
           ]
         }
       ]
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOO-FvB86ja1KS",
+      "title": "Update poc to multi-bit ATHM",
+      "url": "https://github.com/cathieyun/draft-athm/pull/10",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Also add helpers for debugging test vectors, such as printing the parameter elements (genG, genH).\r\n",
+      "createdAt": "2025-08-13T07:11:06Z",
+      "updatedAt": "2025-08-13T17:43:11Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "2bc3ba126f39d724ead6a066190ee3308bdd5a1f",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "cathie/multibit-athm",
+      "headRefOid": "acce47c37c70ff8a5601ba8d7154c911955a36a0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOO-FvB86jipZ2",
+      "title": "Update test vectors",
+      "url": "https://github.com/cathieyun/draft-athm/pull/11",
+      "state": "MERGED",
+      "author": "schoppmp",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See https://github.com/google/anonymous-tokens/issues/36#issuecomment-3185043831",
+      "createdAt": "2025-08-13T18:56:32Z",
+      "updatedAt": "2025-08-13T19:32:27Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "2bc3ba126f39d724ead6a066190ee3308bdd5a1f",
+      "headRepository": "schoppmp/draft-athm",
+      "headRefName": "patch-2",
+      "headRefOid": "48aa9f92239a58f12d7be9092c26b9bb46a0632e",
+      "closedAt": "2025-08-13T19:32:27Z",
+      "mergedAt": "2025-08-13T19:32:27Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "fef7059572bcf6beb218e9ac5548bff9a0258e11"
+      },
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Thanks, LGTM! ",
+          "createdAt": "2025-08-13T19:32:23Z",
+          "updatedAt": "2025-08-13T19:32:23Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
