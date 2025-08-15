@@ -922,7 +922,7 @@ TODO acknowledge.
 
 This section contains test vectors for the ATHM ciphersuites specified in this document.
 The test vectors were generated from the reference implementation located at
-https://github.com/google/anonymous-tokens/tree/3a6ca6cb8d6446396555c2c4dcd250fdc44a30b3/athm.
+https://github.com/google/anonymous-tokens/tree/a313c60b505d13999ced437abf385e48ff90d71b/athm.
 All byte strings, except `deployment_id`, are encoded in hexadecimal.
 
 ## ATHM(P-256)
