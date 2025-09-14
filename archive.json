@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-17T00:45:24.202025+00:00",
+  "timestamp": "2025-09-14T00:40:22.880709+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -510,7 +510,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-08-14T19:54:11Z",
-      "updatedAt": "2025-08-14T19:54:12Z",
+      "updatedAt": "2025-09-13T18:34:38Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "fef7059572bcf6beb218e9ac5548bff9a0258e11",
@@ -521,7 +521,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "This breaks the editor's copy, I think the tests still expect the rng_seed field.",
+          "createdAt": "2025-09-13T18:34:38Z",
+          "updatedAt": "2025-09-13T18:34:38Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -529,24 +537,26 @@
       "id": "PR_kwDOO-FvB86j3KUx",
       "title": "Update commit hash of the Rust implementation",
       "url": "https://github.com/cathieyun/draft-athm/pull/13",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "schoppmp",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-15T16:20:35Z",
-      "updatedAt": "2025-08-15T16:20:36Z",
+      "updatedAt": "2025-09-13T18:05:34Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "fef7059572bcf6beb218e9ac5548bff9a0258e11",
       "headRepository": "schoppmp/draft-athm",
       "headRefName": "patch-4",
       "headRefOid": "2212b5d626c3d8950a3cb36c12833d7cbb41b283",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-13T18:05:34Z",
+      "mergedAt": "2025-09-13T18:05:34Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "2f9dea3f12afb52267877c799d6aeb8c96792756"
+      },
       "comments": [],
       "reviews": []
     }
