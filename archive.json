@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-14T00:40:22.880709+00:00",
+  "timestamp": "2025-09-18T00:36:10.437678+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -105,6 +105,38 @@
       "body": "We need test vectors for P256, with the multi-bucket ATHM, in order to test interoperability.",
       "createdAt": "2025-07-30T20:29:51Z",
       "updatedAt": "2025-07-30T20:29:51Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOO-FvB87MDPkz",
+      "title": "Spec cleanup tasks",
+      "url": "https://github.com/cathieyun/draft-athm/issues/14",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Some cleanup tasks that came up during implementation / interoperability testing\n\n- [ ] Update randomscalar() definition to be in [1, G.Order() - 1]\n- [ ] Add \u201cpi\u201d to KeyGen() output\n    - Double check that spec verifies pi when receiving keys\n- [ ] Add public key + proof serialization (Z, Cx, Cy, pi)\n- [ ] add keyID to test vectors, add keyID generation to the spec explicitly\n    - Note: define SerializedPublicKey. Is this just the byte representation?\n - [ ] Fix typo: privacy pass should say \u201cresponse\u201d instead of \u201crequest\u201d: https://cathieyun.github.io/draft-athm/draft-yun-privacypass-athm.html#name-client-to-issuer-request\n - [ ] Rename [draft-yun-cfrg-athm.md](https://github.com/cathieyun/draft-athm/blob/main/draft-yun-cfrg-athm.md) to `draft-yun-privacypass-crypto-athm.md` instead, for submission to privacy pass instead of CFRG (so we can submit both specs to the same group).",
+      "createdAt": "2025-09-16T19:00:12Z",
+      "updatedAt": "2025-09-17T19:04:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOO-FvB87MSvdc",
+      "title": "Move reference implementation to rust",
+      "url": "https://github.com/cathieyun/draft-athm/issues/15",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently, the python/sage proof of concept is out of sync with the spec (it only supports single-bit ATHM tokens), whereas the rust implementation is in sync with the spec and generates the test vectors we use for interop testing:\nhttps://github.com/google/anonymous-tokens/tree/main/athm\n\nWe should:\n- get rid of the python poc, as it will cause more confusion since it's out of sync.\n- add a reference to the rust implementation in the spec\n",
+      "createdAt": "2025-09-17T19:03:39Z",
+      "updatedAt": "2025-09-17T19:03:39Z",
       "closedAt": null,
       "comments": []
     }
