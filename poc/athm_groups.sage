@@ -4,9 +4,10 @@ from util import to_bytes
 G = GroupP256()
 
 version_identifier = "ATHMV1-"
+deployment_id = "4-test_vector_deployment_id"
 
 def create_context_string(identifier):
-  return version_identifier + identifier
+  return version_identifier + identifier + deployment_id
 
 suite_identifier = create_context_string("P256-")
 
