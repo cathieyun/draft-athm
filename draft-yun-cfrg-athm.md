@@ -245,7 +245,7 @@ The value of the ciphersuite identifier is "P256".
   - Identity(): As defined in {{NISTCurves}}.
   - Generator(): As defined in {{NISTCurves}}.
   - RandomScalar(): Implemented by returning a uniformly random Scalar in the range
-    \[0, `G.Order()` - 1\]. Refer to {{random-scalar}} for implementation guidance.
+    \[1, `G.Order()` - 1\]. Refer to {{random-scalar}} for implementation guidance.
   - HashToGroup(x, info): Use hash_to_curve with suite P256_XMD:SHA-256_SSWU_RO\_
     {{!I-D.irtf-cfrg-hash-to-curve}}, input `x`, and DST =
     "HashToGroup-" || contextString || info.
@@ -321,7 +321,7 @@ Output:
   - Z: Element
   - C_x: Element
   - C_y: Element
-- pi: PublicKeyProof
+  - pi: PublicKeyProof
 
 Parameters
 - Group G
@@ -338,7 +338,7 @@ def KeyGen():
   C_y = (y * G.GeneratorG()) + (r_y * G.GeneratorH())
   pi = CreatePublicKeyProof(z, Z)
 
-  return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y), pi)
+  return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y, pi)
 ~~~
 
 <!-- TODO(caw): specify SerializePublicKey -->
@@ -401,12 +401,13 @@ Input:
   - Z: Element
   - C_x: Element
   - C_y: Element
-- pi: PublicKeyProof
+  - pi: PublicKeyProof
 
 Output:
-- publicKey if valid, False otherwise
+- verifiedPublicKey if valid, False otherwise
 
-def VerifyPublicKeyProof(publicKey, pi):
+def VerifyPublicKeyProof(publicKey):
+  pi = publicKey.pi
   gamma_z = (pi.e * publicKey.Z) +
     (pi.a_z * G.GeneratorG())
 
@@ -421,7 +422,7 @@ def VerifyPublicKeyProof(publicKey, pi):
 
   e_verify = G.HashToScalar(challenge_transcript, "KeyCommitments")
   if e_verify == e:
-    return publicKey
+    return verifiedPublicKey(Z, C_x, C_y)
   return False
 ~~~
 
@@ -477,7 +478,7 @@ Shown graphically, the protocol runs as follows:
                                 request
                             --------------->
 
-                    response = TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
+                         response = TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
 
                                 response
                             <---------------
@@ -549,6 +550,7 @@ Inputs:
   - Z: Element
   - C_x: Element
   - C_y: Element
+  - pi: PublicKeyProof
 - request:
   - T: Element
 - hiddenMetadata: Integer
@@ -607,6 +609,7 @@ Inputs:
   - Z: Element
   - C_x: Element
   - C_y: Element
+  - pi: PublicKeyProof
 - hiddenMetadata: Integer
 - nBuckets: Integer
 - d: Scalar
@@ -782,7 +785,7 @@ The VerifyIssuanceProof function is defined below.
 
 ~~~ pseudocode
 Inputs:
-- publicKey:
+- verifiedPublicKey:
   - Z: Element
   - C_x: Element
   - C_y: Element
@@ -800,12 +803,12 @@ Output:
 Parameters:
 - G: Group
 
-def VerifyIssuanceProof(publicKey, T, response, nBuckets):
+def VerifyIssuanceProof(verifiedPublicKey, T, response, nBuckets):
   pi = response.pi
 
   C_vec = []
   for i in range(nBuckets):
-    C_i = pi.a_vec[i] * G.GeneratorH - (pi.e_vec[i] * (pi.C - (i * publicKey.C_y))
+    C_i = pi.a_vec[i] * G.GeneratorH - (pi.e_vec[i] * (pi.C - (i * verifiedPublicKey.C_y))
 
   e = sum(pi.e_vec)
 
@@ -813,7 +816,7 @@ def VerifyIssuanceProof(publicKey, T, response, nBuckets):
 
   C_rho = (response.pi.a_d * response.V)
       + (response.pi.a_rho * G.GeneratorH())
-      + (e * (publicKey.C_x + response.pi.C + (response.ts * publicKey.Z) + T))
+      + (e * (verifiedPublicKey.C_x + response.pi.C + (response.ts * verifiedPublicKey.Z) + T))
 
   C_w = (response.pi.a_d * response.V)
       + (response.pi.a_w * G.GeneratorG())
@@ -821,9 +824,9 @@ def VerifyIssuanceProof(publicKey, T, response, nBuckets):
 
   ser_genG = G.SerializeElement(G.GeneratorG())
   ser_genH = G.SerializeElement(G.GeneratorH())
-  ser_C_x = G.SerializeElement(publicKey.C_x)
-  ser_C_y = G.SerializeElement(publicKey.C_y)
-  ser_Z = G.SerializeElement(publicKey.Z)
+  ser_C_x = G.SerializeElement(verifiedPublicKey.C_x)
+  ser_C_y = G.SerializeElement(verifiedPublicKey.C_y)
+  ser_Z = G.SerializeElement(verifiedPublicKey.Z)
   ser_U = G.SerializeElement(response.U)
   ser_V = G.SerializeElement(response.V)
   ser_ts = G.SerializeScalar(response.ts)

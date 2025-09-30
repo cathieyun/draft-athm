@@ -136,11 +136,18 @@ this protocol to produce a credential are described below.
 
 ## Client-to-Issuer Request
 
-Given Issuer Public Key `pkI`, the Client first creates a token request
-message using the `TokenRequest` function from {{ATHM-SPEC}} as follows:
+Given Issuer Public Key `pkI`, the Client first verifies the public key to make
+a verified public key:
 
 ~~~
-(context, request) = TokenRequest(pkI)
+verifiedPublicKey = VerifyPublicKeyProof(publicKey, pi)
+~~~
+
+Next, it creates a token request message using the `TokenRequest` function from 
+{{ATHM-SPEC}} as follows:
+
+~~~
+(context, request) = TokenRequest(verifiedPublicKey)
 ~~~
 
 The Client then creates a TokenRequest structure as follows:
@@ -183,7 +190,7 @@ Content-Length: <Length of TokenRequest>
 <Bytes containing the TokenRequest>
 ~~~
 
-## Issuer-to-Client Request
+## Issuer-to-Client Response
 
 Upon receipt of the request, the Issuer validates the following conditions:
 
@@ -240,7 +247,7 @@ yielding `response`. If deserialization fails, the Client aborts the protocol.
 Otherwise, the Client processes the response as follows:
 
 ~~~
-token = FinalizeToken(context, pkI, request, response)
+token = FinalizeToken(context, verifiedPublicKey, request, response)
 ~~~
 
 The Client then saves the resulting token structure for use with a future redemption.
