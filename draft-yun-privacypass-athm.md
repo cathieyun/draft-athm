@@ -143,7 +143,7 @@ a verified public key:
 verifiedPublicKey = VerifyPublicKeyProof(publicKey, pi)
 ~~~
 
-Next, it creates a token request message using the `TokenRequest` function from 
+Next, it creates a token request message using the `TokenRequest` function from
 {{ATHM-SPEC}} as follows:
 
 ~~~
