@@ -938,7 +938,7 @@ TODO acknowledge.
 
 This section contains test vectors for the ATHM ciphersuites specified in this document.
 The test vectors were generated from the reference implementation located at
-https://github.com/google/anonymous-tokens/tree/a313c60b505d13999ced437abf385e48ff90d71b/athm.
+https://github.com/google/anonymous-tokens/pull/45/commits/8701431d31c2f49774526fac23bf7a2d24864314.
 All byte strings, except `deployment_id`, are encoded in hexadecimal.
 
 ## ATHM(P-256)
@@ -962,6 +962,7 @@ All byte strings, except `deployment_id`, are encoded in hexadecimal.
       "rng_seed": "0101010101010101010101010101010101010101010101010101010101010101"
     },
     "output": {
+      "key_id": "c34372beed1cd30501e3fbf39918db964646af5ac6e5fb4ffcd810daf95eef13",
       "private_key": "023f37203a2476c42566a61cc55c3ca875dbb4cc41c0deb789f8e7bf881836381ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d01274dd1ee5216c204fb698daea45b52e98b6f0fdd046dcc3a86bb079e36f024147e4b875d59a9ef432b8e45b04a98c4b19dc8c7475f5dce4259b4ca2dd67282b478b8702c1d2569fe52e5d7dbadec6223cd10fd4b504dabac7fff23a37363d1",
       "public_key": "032b80024ee818d709196780a84affe08789f571529fccc1acce07eea2df2fc65f035f6a6eb84bea9c1361119462bda863c47c3b43e53e9e5e7a8796ba1b924d093e03b7f16df0ad82cbd8bd6a04ed427107adf5a3d4ba840e9b341a3badc1d9b7fe19",
       "public_key_proof": "28ccf67d4ad339a45a8435b660160fef113a157221ce6f4a5c6f584a58d4509152852fcc950dd7495211dbefd34b733a730e5a2085e04f847e3c1af4355c59fe"
@@ -1009,7 +1010,6 @@ All byte strings, except `deployment_id`, are encoded in hexadecimal.
     "procedure": "verify_token",
     "args": {
       "private_key": "023f37203a2476c42566a61cc55c3ca875dbb4cc41c0deb789f8e7bf881836381ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d01274dd1ee5216c204fb698daea45b52e98b6f0fdd046dcc3a86bb079e36f024147e4b875d59a9ef432b8e45b04a98c4b19dc8c7475f5dce4259b4ca2dd67282b478b8702c1d2569fe52e5d7dbadec6223cd10fd4b504dabac7fff23a37363d1",
-      "rng_seed": "0404040404040404040404040404040404040404040404040404040404040404",
       "token": "b7d8310e1899a748b3000e522d320b29880e07119f1a776b639b3ce0a4a01a9f02123d0c125de3d122577b335a8f6616d735e9400b60dcde57eff056e9cbbd2b3c03a062c5b41507e1fe089d0c3b4132d84ece1d4a9dfc0bf4f0588d660f25bdf6cf"
     },
     "output": {
