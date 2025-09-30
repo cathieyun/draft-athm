@@ -341,7 +341,20 @@ def KeyGen():
   return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y, pi)
 ~~~
 
-<!-- TODO(caw): specify SerializePublicKey -->
+The output `publicKey` from this function is wire-encoded into `publicKey = 3*Ne+2*Ns` bytes as follows:
+
+~~~
+struct {
+  uint8 Z_enc[Ne];
+  uint8 C_x_enc[Ne];
+  uint8 C_y_enc[Ne];
+  uint8 pi_enc[Nproof];
+}
+~~~
+
+The `Z_enc`, `C_x_enc`, and `C_y_enc` fields are the serialized representations
+of `publicKey.Z`, `publicKey.C_x`, and `publicKey.C_y`, respectively.
+The `pi_enc` field is the serialized PublicKeyProof, as defined below.
 
 ### Public Key Proof {#public-key-proof}
 
