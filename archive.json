@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-18T00:36:10.437678+00:00",
+  "timestamp": "2025-10-02T00:36:30.681028+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -73,15 +73,15 @@
       "id": "I_kwDOO-FvB87DZ9j6",
       "title": "Encode protocol specific information in the F-S transform",
       "url": "https://github.com/cathieyun/draft-athm/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cathieyun",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Encode information about the protocol, such as what version/deployment as well as how many buckets, in the F-S transform so it's cryptographically tied to the issuance proof.\n\nDo this in the spec, as well as poc so the test vectors get updated.",
       "createdAt": "2025-07-30T20:28:51Z",
-      "updatedAt": "2025-08-06T20:57:38Z",
-      "closedAt": null,
+      "updatedAt": "2025-09-30T21:50:47Z",
+      "closedAt": "2025-09-30T21:50:47Z",
       "comments": [
         {
           "author": "cathieyun",
@@ -89,6 +89,13 @@
           "body": "We still need to pull the spec update in to the POC and test vectors.",
           "createdAt": "2025-08-06T20:57:38Z",
           "updatedAt": "2025-08-06T20:57:38Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Closing this in favor of:\nhttps://github.com/cathieyun/draft-athm/pull/17",
+          "createdAt": "2025-09-30T21:50:47Z",
+          "updatedAt": "2025-09-30T21:50:47Z"
         }
       ]
     },
@@ -97,16 +104,24 @@
       "id": "I_kwDOO-FvB87DZ-Kx",
       "title": "Updated poc and test vectors for P256 and multi-bucket protocol",
       "url": "https://github.com/cathieyun/draft-athm/issues/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cathieyun",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "We need test vectors for P256, with the multi-bucket ATHM, in order to test interoperability.",
       "createdAt": "2025-07-30T20:29:51Z",
-      "updatedAt": "2025-07-30T20:29:51Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-09-30T21:51:07Z",
+      "closedAt": "2025-09-30T21:51:07Z",
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Closing this in favor of https://github.com/cathieyun/draft-athm/pull/17",
+          "createdAt": "2025-09-30T21:51:07Z",
+          "updatedAt": "2025-09-30T21:51:07Z"
+        }
+      ]
     },
     {
       "number": 14,
@@ -118,11 +133,19 @@
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
-      "body": "Some cleanup tasks that came up during implementation / interoperability testing\n\n- [ ] Update randomscalar() definition to be in [1, G.Order() - 1]\n- [ ] Add \u201cpi\u201d to KeyGen() output\n    - Double check that spec verifies pi when receiving keys\n- [ ] Add public key + proof serialization (Z, Cx, Cy, pi)\n- [ ] add keyID to test vectors, add keyID generation to the spec explicitly\n    - Note: define SerializedPublicKey. Is this just the byte representation?\n - [ ] Fix typo: privacy pass should say \u201cresponse\u201d instead of \u201crequest\u201d: https://cathieyun.github.io/draft-athm/draft-yun-privacypass-athm.html#name-client-to-issuer-request\n - [ ] Rename [draft-yun-cfrg-athm.md](https://github.com/cathieyun/draft-athm/blob/main/draft-yun-cfrg-athm.md) to `draft-yun-privacypass-crypto-athm.md` instead, for submission to privacy pass instead of CFRG (so we can submit both specs to the same group).",
+      "body": "Some cleanup tasks that came up during implementation / interoperability testing\n\n- [x] Update randomscalar() definition to be in [1, G.Order() - 1]\n- [x] Add \u201cpi\u201d to KeyGen() output\n    - Double check that spec verifies pi when receiving keys\n- [x] Add public key + proof serialization (Z, Cx, Cy, pi)\n- [ ] add keyID to test vectors, add keyID generation to the spec explicitly\n    - Note: define SerializedPublicKey. Is this just the byte representation?\n - [x] Fix typo: privacy pass should say \u201cresponse\u201d instead of \u201crequest\u201d: https://cathieyun.github.io/draft-athm/draft-yun-privacypass-athm.html#name-client-to-issuer-request\n - [ ] Rename [draft-yun-cfrg-athm.md](https://github.com/cathieyun/draft-athm/blob/main/draft-yun-cfrg-athm.md) to `draft-yun-privacypass-crypto-athm.md` instead, for submission to privacy pass instead of CFRG (so we can submit both specs to the same group).",
       "createdAt": "2025-09-16T19:00:12Z",
-      "updatedAt": "2025-09-17T19:04:52Z",
+      "updatedAt": "2025-09-30T20:19:52Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "> Rename [draft-yun-cfrg-athm.md](https://github.com/cathieyun/draft-athm/blob/main/draft-yun-cfrg-athm.md) to draft-yun-privacypass-crypto-athm.md instead, for submission to privacy pass instead of CFRG (so we can submit both specs to the same group).\n\nThis may be optional, as we are not currently looking to move towards adoption of these specs in either group. Open to discussion.",
+          "createdAt": "2025-09-30T18:47:52Z",
+          "updatedAt": "2025-09-30T18:48:04Z"
+        }
+      ]
     },
     {
       "number": 15,
@@ -473,25 +496,33 @@
       "id": "PR_kwDOO-FvB86ja1KS",
       "title": "Update poc to multi-bit ATHM",
       "url": "https://github.com/cathieyun/draft-athm/pull/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cathieyun",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Also add helpers for debugging test vectors, such as printing the parameter elements (genG, genH).\r\n",
       "createdAt": "2025-08-13T07:11:06Z",
-      "updatedAt": "2025-08-13T17:43:11Z",
+      "updatedAt": "2025-09-30T21:50:23Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "2bc3ba126f39d724ead6a066190ee3308bdd5a1f",
       "headRepository": "cathieyun/draft-athm",
       "headRefName": "cathie/multibit-athm",
       "headRefOid": "acce47c37c70ff8a5601ba8d7154c911955a36a0",
-      "closedAt": null,
+      "closedAt": "2025-09-30T21:50:22Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Closing this in favor of the rust implementation:\r\nhttps://github.com/cathieyun/draft-athm/pull/17",
+          "createdAt": "2025-09-30T21:50:22Z",
+          "updatedAt": "2025-09-30T21:50:22Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -535,21 +566,21 @@
       "id": "PR_kwDOO-FvB86jvvxp",
       "title": "Remove unnecessary `rng_seed` from `verify_token` test vector",
       "url": "https://github.com/cathieyun/draft-athm/pull/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "schoppmp",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-14T19:54:11Z",
-      "updatedAt": "2025-09-13T18:34:38Z",
+      "updatedAt": "2025-09-30T21:51:52Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "fef7059572bcf6beb218e9ac5548bff9a0258e11",
       "headRepository": "schoppmp/draft-athm",
       "headRefName": "patch-3",
       "headRefOid": "11246a1b514e062dc84b7862ac1b15d814565f74",
-      "closedAt": null,
+      "closedAt": "2025-09-30T21:51:26Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -560,6 +591,20 @@
           "body": "This breaks the editor's copy, I think the tests still expect the rng_seed field.",
           "createdAt": "2025-09-13T18:34:38Z",
           "updatedAt": "2025-09-13T18:34:38Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "This is fixed in this PR: https://github.com/cathieyun/draft-athm/pull/16",
+          "createdAt": "2025-09-30T21:35:43Z",
+          "updatedAt": "2025-09-30T21:35:43Z"
+        },
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "Closing this in favor of https://github.com/cathieyun/draft-athm/pull/16",
+          "createdAt": "2025-09-30T21:51:26Z",
+          "updatedAt": "2025-09-30T21:51:52Z"
         }
       ],
       "reviews": []
@@ -589,6 +634,66 @@
       "mergeCommit": {
         "oid": "2f9dea3f12afb52267877c799d6aeb8c96792756"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOO-FvB86rbO63",
+      "title": "Spec cleanup: keyID, public key serialization",
+      "url": "https://github.com/cathieyun/draft-athm/pull/16",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses https://github.com/cathieyun/draft-athm/issues/14:\r\n\r\n- Add public key + proof serialization (Z, Cx, Cy, pi)\r\n- Add keyID to test vectors\r\n  - associated change in the reference implementation here: https://github.com/google/anonymous-tokens/pull/45\r\n- Fix lint error\r\n\r\nThis also encompasses the fix in this PR:\r\nhttps://github.com/cathieyun/draft-athm/pull/16",
+      "createdAt": "2025-09-30T21:19:52Z",
+      "updatedAt": "2025-10-01T16:47:15Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "40a5120857a2bbe242073a24c7e85c54b2e4f093",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "cathie/keyserialization",
+      "headRefOid": "82b4de4c153c523c36202cd8d61d2818ed71fa77",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "Guss123",
+          "authorAssociation": "NONE",
+          "body": "The current key id you posted is not the same one we inter-oped on in slack.\r\n\r\nYou are taking concatenating the hex bytes of the publickey with the hex bytes of the publickeyproof, treating the result as UTF-8 encoded string and then taking SHA256. \r\n\r\nWhereas what we finalized was simply taking the sha256 of the publickey bytes (032b80024ee818d709196780a84affe08789f571529fccc1acce07eea2df2fc65f035f6a6eb84bea9c1361119462bda863c47c3b43e53e9e5e7a8796ba1b924d093e03b7f16df0ad82cbd8bd6a04ed427107adf5a3d4ba840e9b341a3badc1d9b7fe19) \r\nwhich comes out to be 027defbe3a76d47f76e8e1296ddbadf8faeb91852a5964d7986ad974441dfc1c",
+          "createdAt": "2025-10-01T08:17:52Z",
+          "updatedAt": "2025-10-01T16:47:15Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOO-FvB86rbQEq",
+      "title": "Remove sage POC in favor of rust implementation",
+      "url": "https://github.com/cathieyun/draft-athm/pull/17",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses https://github.com/cathieyun/draft-athm/issues/15 and https://github.com/cathieyun/draft-athm/issues/6\r\n\r\nBasically just deletes the entire `poc/` directory, plus one lint fix.",
+      "createdAt": "2025-09-30T21:22:22Z",
+      "updatedAt": "2025-09-30T21:37:09Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "40a5120857a2bbe242073a24c7e85c54b2e4f093",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "cathie/remove-poc",
+      "headRefOid": "939b19fc440b4ac0d831cd374812a60403f40cf4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
