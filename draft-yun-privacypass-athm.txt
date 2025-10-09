@@ -4,8 +4,8 @@
 
 Network Working Group                                       J. Appleseed
 Internet-Draft                                               Apple, Inc.
-Intended status: Standards Track                       13 September 2025
-Expires: 17 March 2026
+Intended status: Standards Track                          9 October 2025
+Expires: 12 April 2026
 
 
      Anonymous Token with Hidden Metadata Privacy Pass Issuance and
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 March 2026.
+   This Internet-Draft will expire on 12 April 2026.
 
 Copyright Notice
 
@@ -71,7 +71,7 @@ Table of Contents
    4.  Configuration
    5.  Token Issuance Protocol
      5.1.  Client-to-Issuer Request
-     5.2.  Issuer-to-Client Request
+     5.2.  Issuer-to-Client Response
      5.3.  Token Finalization
    6.  Token Redemption Protocol
      6.1.  Token Structure
@@ -192,10 +192,15 @@ Table of Contents
 
 5.1.  Client-to-Issuer Request
 
-   Given Issuer Public Key pkI, the Client first creates a token request
-   message using the TokenRequest function from [ATHM-SPEC] as follows:
+   Given Issuer Public Key pkI, the Client first verifies the public key
+   to make a verified public key:
 
-   (context, request) = TokenRequest(pkI)
+   verifiedPublicKey = VerifyPublicKeyProof(publicKey, pi)
+
+   Next, it creates a token request message using the TokenRequest
+   function from [ATHM-SPEC] as follows:
+
+   (context, request) = TokenRequest(verifiedPublicKey)
 
    The Client then creates a TokenRequest structure as follows:
 
@@ -236,7 +241,7 @@ Table of Contents
 
    <Bytes containing the TokenRequest>
 
-5.2.  Issuer-to-Client Request
+5.2.  Issuer-to-Client Response
 
    Upon receipt of the request, the Issuer validates the following
    conditions:
@@ -294,7 +299,7 @@ Table of Contents
    fails, the Client aborts the protocol.  Otherwise, the Client
    processes the response as follows:
 
-   token = FinalizeToken(context, pkI, request, response)
+   token = FinalizeToken(context, verifiedPublicKey, request, response)
 
    The Client then saves the resulting token structure for use with a
    future redemption.

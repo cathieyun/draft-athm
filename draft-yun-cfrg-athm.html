@@ -14,13 +14,13 @@
 for constructing Privacy Pass like tokens with hidden metadata embedded within it unknown
 to the client. 
     " name="description">
-<meta content="xml2rfc 3.30.1" name="generator">
+<meta content="xml2rfc 3.30.2" name="generator">
 <meta content="next generation" name="keyword">
 <meta content="unicorn" name="keyword">
 <meta content="sparkling distributed ledger" name="keyword">
 <meta content="draft-yun-cfrg-athm-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.1
+  xml2rfc 3.30.2
     Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
@@ -32,7 +32,7 @@ to the client.
     PyYAML 6.0.2
     requests 2.32.5
     setuptools 80.9.0
-    wcwidth 0.2.13
+    wcwidth 0.2.14
 -->
 <link href="draft-yun-cfrg-athm.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1051,11 +1051,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">ATHM</td>
-<td class="right">September 2025</td>
+<td class="right">October 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Yun, et al.</td>
-<td class="center">Expires 17 March 2026</td>
+<td class="center">Expires 12 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-yun-cfrg-athm-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-09-13" class="published">13 September 2025</time>
+<time datetime="2025-10-09" class="published">9 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-03-17">17 March 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-12">12 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1137,7 @@ to the client.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1514,7 +1514,7 @@ The value of the ciphersuite identifier is "P256".<a href="#section-4.1-1" class
 </li>
               <li class="normal" id="section-4.1-2.1.2.4">
                 <p id="section-4.1-2.1.2.4.1">RandomScalar(): Implemented by returning a uniformly random Scalar in the range
-[0, <code>G.Order()</code> - 1]. Refer to <a href="#random-scalar" class="auto internal xref">Section 4.2</a> for implementation guidance.<a href="#section-4.1-2.1.2.4.1" class="pilcrow">¶</a></p>
+[1, <code>G.Order()</code> - 1]. Refer to <a href="#random-scalar" class="auto internal xref">Section 4.2</a> for implementation guidance.<a href="#section-4.1-2.1.2.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-2.1.2.5">
                 <p id="section-4.1-2.1.2.5.1">HashToGroup(x, info): Use hash_to_curve with suite P256_XMD:SHA-256_SSWU_RO_
@@ -1627,7 +1627,7 @@ Output:
   - Z: Element
   - C_x: Element
   - C_y: Element
-- pi: PublicKeyProof
+  - pi: PublicKeyProof
 
 Parameters
 - Group G
@@ -1644,7 +1644,7 @@ def KeyGen():
   C_y = (y * G.GeneratorG()) + (r_y * G.GeneratorH())
   pi = CreatePublicKeyProof(z, Z)
 
-  return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y), pi)
+  return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y, pi)
 </pre><a href="#section-5.1-2" class="pilcrow">¶</a>
 </div>
 <div id="public-key-proof">
@@ -1708,12 +1708,13 @@ Input:
   - Z: Element
   - C_x: Element
   - C_y: Element
-- pi: PublicKeyProof
+  - pi: PublicKeyProof
 
 Output:
-- publicKey if valid, False otherwise
+- verifiedPublicKey if valid, False otherwise
 
-def VerifyPublicKeyProof(publicKey, pi):
+def VerifyPublicKeyProof(publicKey):
+  pi = publicKey.pi
   gamma_z = (pi.e * publicKey.Z) +
     (pi.a_z * G.GeneratorG())
 
@@ -1728,7 +1729,7 @@ def VerifyPublicKeyProof(publicKey, pi):
 
   e_verify = G.HashToScalar(challenge_transcript, "KeyCommitments")
   if e_verify == e:
-    return publicKey
+    return verifiedPublicKey(Z, C_x, C_y)
   return False
 </pre><a href="#section-5.1.1-6" class="pilcrow">¶</a>
 </div>
@@ -1788,7 +1789,7 @@ hiddenMetadata = VerifyToken(privateKey, token, nBuckets)
                                 request
                             ---------------&gt;
 
-                    response = TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
+                         response = TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
 
                                 response
                             &lt;---------------
@@ -1868,6 +1869,7 @@ Inputs:
   - Z: Element
   - C_x: Element
   - C_y: Element
+  - pi: PublicKeyProof
 - request:
   - T: Element
 - hiddenMetadata: Integer
@@ -1925,6 +1927,7 @@ Inputs:
   - Z: Element
   - C_x: Element
   - C_y: Element
+  - pi: PublicKeyProof
 - hiddenMetadata: Integer
 - nBuckets: Integer
 - d: Scalar
@@ -2102,7 +2105,7 @@ struct {
 <div class="breakable lang-pseudocode sourcecode" id="section-5.4.1-6">
 <pre>
 Inputs:
-- publicKey:
+- verifiedPublicKey:
   - Z: Element
   - C_x: Element
   - C_y: Element
@@ -2120,12 +2123,12 @@ Output:
 Parameters:
 - G: Group
 
-def VerifyIssuanceProof(publicKey, T, response, nBuckets):
+def VerifyIssuanceProof(verifiedPublicKey, T, response, nBuckets):
   pi = response.pi
 
   C_vec = []
   for i in range(nBuckets):
-    C_i = pi.a_vec[i] * G.GeneratorH - (pi.e_vec[i] * (pi.C - (i * publicKey.C_y))
+    C_i = pi.a_vec[i] * G.GeneratorH - (pi.e_vec[i] * (pi.C - (i * verifiedPublicKey.C_y))
 
   e = sum(pi.e_vec)
 
@@ -2133,7 +2136,7 @@ def VerifyIssuanceProof(publicKey, T, response, nBuckets):
 
   C_rho = (response.pi.a_d * response.V)
       + (response.pi.a_rho * G.GeneratorH())
-      + (e * (publicKey.C_x + response.pi.C + (response.ts * publicKey.Z) + T))
+      + (e * (verifiedPublicKey.C_x + response.pi.C + (response.ts * verifiedPublicKey.Z) + T))
 
   C_w = (response.pi.a_d * response.V)
       + (response.pi.a_w * G.GeneratorG())
@@ -2141,9 +2144,9 @@ def VerifyIssuanceProof(publicKey, T, response, nBuckets):
 
   ser_genG = G.SerializeElement(G.GeneratorG())
   ser_genH = G.SerializeElement(G.GeneratorH())
-  ser_C_x = G.SerializeElement(publicKey.C_x)
-  ser_C_y = G.SerializeElement(publicKey.C_y)
-  ser_Z = G.SerializeElement(publicKey.Z)
+  ser_C_x = G.SerializeElement(verifiedPublicKey.C_x)
+  ser_C_y = G.SerializeElement(verifiedPublicKey.C_y)
+  ser_Z = G.SerializeElement(verifiedPublicKey.Z)
   ser_U = G.SerializeElement(response.U)
   ser_V = G.SerializeElement(response.V)
   ser_ts = G.SerializeScalar(response.ts)

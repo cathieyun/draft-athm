@@ -5,10 +5,10 @@
 Crypto Forum                                                      C. Yun
 Internet-Draft                                                C. A. Wood
 Intended status: Informational                               Apple, Inc.
-Expires: 17 March 2026                                        M. Raykova
+Expires: 12 April 2026                                        M. Raykova
                                                           S. Schlesinger
                                                                   Google
-                                                       13 September 2025
+                                                          9 October 2025
 
 
                  Anonymous Tokens with Hidden Metadata
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 March 2026.
+   This Internet-Draft will expire on 12 April 2026.
 
 Copyright Notice
 
@@ -318,7 +318,7 @@ Table of Contents
       -  Generator(): As defined in [NISTCurves].
 
       -  RandomScalar(): Implemented by returning a uniformly random
-         Scalar in the range [0, G.Order() - 1].  Refer to Section 4.2
+         Scalar in the range [1, G.Order() - 1].  Refer to Section 4.2
          for implementation guidance.
 
       -  HashToGroup(x, info): Use hash_to_curve with suite
@@ -413,7 +413,7 @@ Table of Contents
      - Z: Element
      - C_x: Element
      - C_y: Element
-   - pi: PublicKeyProof
+     - pi: PublicKeyProof
 
    Parameters
    - Group G
@@ -430,7 +430,7 @@ Table of Contents
      C_y = (y * G.GeneratorG()) + (r_y * G.GeneratorH())
      pi = CreatePublicKeyProof(z, Z)
 
-     return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y), pi)
+     return privateKey(x, y, z, r_x, r_y), publicKey(Z, C_x, C_y, pi)
 
 5.1.1.  Public Key Proof
 
@@ -487,12 +487,13 @@ Table of Contents
      - Z: Element
      - C_x: Element
      - C_y: Element
-   - pi: PublicKeyProof
+     - pi: PublicKeyProof
 
    Output:
-   - publicKey if valid, False otherwise
+   - verifiedPublicKey if valid, False otherwise
 
-   def VerifyPublicKeyProof(publicKey, pi):
+   def VerifyPublicKeyProof(publicKey):
+     pi = publicKey.pi
      gamma_z = (pi.e * publicKey.Z) +
        (pi.a_z * G.GeneratorG())
 
@@ -507,7 +508,7 @@ Table of Contents
 
      e_verify = G.HashToScalar(challenge_transcript, "KeyCommitments")
      if e_verify == e:
-       return publicKey
+       return verifiedPublicKey(Z, C_x, C_y)
      return False
 
 5.2.  ATHM Protocol
@@ -561,7 +562,7 @@ token = FinalizeToken(context, verifiedPublicKey, request, response, nBuckets)
                                 request
                             --------------->
 
-                    response = TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
+                         response = TokenResponse(privateKey, publicKey, request, hiddenMetadata, nBuckets)
 
                                 response
                             <---------------
@@ -629,6 +630,7 @@ token = FinalizeToken(context, verifiedPublicKey, request, response, nBuckets)
      - Z: Element
      - C_x: Element
      - C_y: Element
+     - pi: PublicKeyProof
    - request:
      - T: Element
    - hiddenMetadata: Integer
@@ -685,6 +687,7 @@ token = FinalizeToken(context, verifiedPublicKey, request, response, nBuckets)
      - Z: Element
      - C_x: Element
      - C_y: Element
+     - pi: PublicKeyProof
    - hiddenMetadata: Integer
    - nBuckets: Integer
    - d: Scalar
@@ -854,7 +857,7 @@ def FinalizeToken(context, verifiedPublicKey, request, response, nBuckets):
    The VerifyIssuanceProof function is defined below.
 
    Inputs:
-   - publicKey:
+   - verifiedPublicKey:
      - Z: Element
      - C_x: Element
      - C_y: Element
@@ -872,12 +875,12 @@ def FinalizeToken(context, verifiedPublicKey, request, response, nBuckets):
    Parameters:
    - G: Group
 
-   def VerifyIssuanceProof(publicKey, T, response, nBuckets):
+   def VerifyIssuanceProof(verifiedPublicKey, T, response, nBuckets):
      pi = response.pi
 
      C_vec = []
      for i in range(nBuckets):
-       C_i = pi.a_vec[i] * G.GeneratorH - (pi.e_vec[i] * (pi.C - (i * publicKey.C_y))
+       C_i = pi.a_vec[i] * G.GeneratorH - (pi.e_vec[i] * (pi.C - (i * verifiedPublicKey.C_y))
 
      e = sum(pi.e_vec)
 
@@ -885,7 +888,7 @@ def FinalizeToken(context, verifiedPublicKey, request, response, nBuckets):
 
      C_rho = (response.pi.a_d * response.V)
          + (response.pi.a_rho * G.GeneratorH())
-         + (e * (publicKey.C_x + response.pi.C + (response.ts * publicKey.Z) + T))
+         + (e * (verifiedPublicKey.C_x + response.pi.C + (response.ts * verifiedPublicKey.Z) + T))
 
      C_w = (response.pi.a_d * response.V)
          + (response.pi.a_w * G.GeneratorG())
@@ -893,9 +896,9 @@ def FinalizeToken(context, verifiedPublicKey, request, response, nBuckets):
 
      ser_genG = G.SerializeElement(G.GeneratorG())
      ser_genH = G.SerializeElement(G.GeneratorH())
-     ser_C_x = G.SerializeElement(publicKey.C_x)
-     ser_C_y = G.SerializeElement(publicKey.C_y)
-     ser_Z = G.SerializeElement(publicKey.Z)
+     ser_C_x = G.SerializeElement(verifiedPublicKey.C_x)
+     ser_C_y = G.SerializeElement(verifiedPublicKey.C_y)
+     ser_Z = G.SerializeElement(verifiedPublicKey.Z)
      ser_U = G.SerializeElement(response.U)
      ser_V = G.SerializeElement(response.V)
      ser_ts = G.SerializeScalar(response.ts)
