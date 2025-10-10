@@ -4,8 +4,8 @@
 
 Network Working Group                                       J. Appleseed
 Internet-Draft                                               Apple, Inc.
-Intended status: Standards Track                          9 October 2025
-Expires: 12 April 2026
+Intended status: Standards Track                         10 October 2025
+Expires: 13 April 2026
 
 
      Anonymous Token with Hidden Metadata Privacy Pass Issuance and
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 April 2026.
+   This Internet-Draft will expire on 13 April 2026.
 
 Copyright Notice
 
@@ -159,8 +159,8 @@ Table of Contents
    skI, pkI = KeyGen()
 
    The Issuer Public Key ID, denoted issuer_key_id, is computed as the
-   SHA-256 hash of the Issuer Public Key, i.e., issuer_key_id = SHA-
-   256(SerializedPublicKey(pkI)).
+   SHA-256 hash of the Verified Issuer Public Key, i.e., issuer_key_id =
+   SHA-256(Serialize(verifiedPublicKey)).
 
 5.  Token Issuance Protocol
 
