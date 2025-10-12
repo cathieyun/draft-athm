@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-09T00:37:27.514771+00:00",
+  "timestamp": "2025-10-12T00:39:32.210853+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -128,15 +128,15 @@
       "id": "I_kwDOO-FvB87MDPkz",
       "title": "Spec cleanup tasks",
       "url": "https://github.com/cathieyun/draft-athm/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cathieyun",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Some cleanup tasks that came up during implementation / interoperability testing\n\n- [x] Update randomscalar() definition to be in [1, G.Order() - 1]\n- [x] Add \u201cpi\u201d to KeyGen() output\n    - Double check that spec verifies pi when receiving keys\n- [x] Add public key + proof serialization (Z, Cx, Cy, pi)\n- [ ] add keyID to test vectors, add keyID generation to the spec explicitly\n    - Note: define SerializedPublicKey. Is this just the byte representation?\n - [x] Fix typo: privacy pass should say \u201cresponse\u201d instead of \u201crequest\u201d: https://cathieyun.github.io/draft-athm/draft-yun-privacypass-athm.html#name-client-to-issuer-request\n - [ ] Rename [draft-yun-cfrg-athm.md](https://github.com/cathieyun/draft-athm/blob/main/draft-yun-cfrg-athm.md) to `draft-yun-privacypass-crypto-athm.md` instead, for submission to privacy pass instead of CFRG (so we can submit both specs to the same group).",
       "createdAt": "2025-09-16T19:00:12Z",
-      "updatedAt": "2025-09-30T20:19:52Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-10T04:43:06Z",
+      "closedAt": "2025-10-10T04:43:06Z",
       "comments": [
         {
           "author": "cathieyun",
@@ -642,24 +642,26 @@
       "id": "PR_kwDOO-FvB86rbO63",
       "title": "Spec cleanup: keyID, public key serialization",
       "url": "https://github.com/cathieyun/draft-athm/pull/16",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cathieyun",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Addresses https://github.com/cathieyun/draft-athm/issues/14:\r\n\r\n- Add public key + proof serialization (Z, Cx, Cy, pi)\r\n- Add keyID to test vectors\r\n  - associated change in the reference implementation here: https://github.com/google/anonymous-tokens/pull/45\r\n- Fix lint error\r\n\r\nThis also encompasses the fix in this PR:\r\nhttps://github.com/cathieyun/draft-athm/pull/16",
       "createdAt": "2025-09-30T21:19:52Z",
-      "updatedAt": "2025-10-08T00:10:45Z",
+      "updatedAt": "2025-10-10T04:43:05Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "40a5120857a2bbe242073a24c7e85c54b2e4f093",
       "headRepository": "cathieyun/draft-athm",
       "headRefName": "cathie/keyserialization",
       "headRefOid": "be844173af25da677476ac40051560ea542ebbcf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-10-10T04:43:05Z",
+      "mergedAt": "2025-10-10T04:43:05Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "44d9e0d539daa5b049f63c3026e16645bbfebc94"
+      },
       "comments": [
         {
           "author": "Guss123",
@@ -676,7 +678,21 @@
           "updatedAt": "2025-10-08T00:10:45Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOO-FvB87F7Tq5",
+          "commit": {
+            "abbreviatedOid": "be84417"
+          },
+          "author": "SamuelSchlesinger",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM!",
+          "createdAt": "2025-10-09T21:12:22Z",
+          "updatedAt": "2025-10-09T21:12:22Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 17,
