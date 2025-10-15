@@ -40,7 +40,27 @@ TODO Abstract
 
 # Introduction
 
-TODO Introduction
+The Privacy Pass architecture introduced in {{ARCHITECTURE}} assumes that an anonymous single use 
+token carries exactly one bit of information about the client who owns the token, namely the fact
+that this client was issued a valid token as a trust signal. Importantly, the client knows this one 
+bit signal since it can verify that it received a valid token during issuance.
+
+While in many applications the trust signals that are attributed to clients via anonymous credentials
+should be known to them, there are cases where these signals need to remain hidden from the clients 
+as a prerequisite for the effectiveness of the token scheme as a trust conveying mechanism. These settings 
+relate to fraud detection where allowing the attacker to learn that it has been flagged as fraudulent 
+enables them to adapt and update their attack strategies much more effectively. 
+
+An Anonymous Token with Hidden Metadata (ATHM), as specified in {{ATHM}}, allows the issuer to embed
+a fixed number of hidden metadata bits in the issued token. These metadata bits are only readable at 
+token redemption by the party holding the secret key for the scheme. These bits reduce the anonymity 
+properties of the tokens allowing the issuer to partition clients into as many groups as the domain of 
+metadata in a secret way. That is why it is important to choose carefully the limit on the allowed metadata
+bits. The client can verify that the token it was issued does not contain more metadata bits than allowed.
+
+The ATHM tokens provide a way to enable hidden trust signals in an authentication token while achieving as
+strong anonimity set properties as possible in this setting. Such tokens provide a bridge for using anonymous 
+credentials in fraud applications. 
 
 
 # Terminology
