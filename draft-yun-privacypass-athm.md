@@ -40,10 +40,11 @@ TODO Abstract
 
 # Introduction
 
-The Privacy Pass architecture introduced in {{ARCHITECTURE}} assumes that an anonymous single use 
-token carries exactly one bit of information about the client who owns the token, namely the fact
-that this client was issued a valid token as a trust signal. Importantly, the client knows this one 
-bit signal since it can verify that it received a valid token during issuance.
+The Privacy Pass architecture introduced in {{ARCHITECTURE}} defines an anonymous single use token scheme. 
+The strongest anonymity instantiation of a Privacy Pass token scheme carries exactly one bit of information 
+about the client, namely the fact that this client was issued a valid token as a trust signal, and this bit 
+is known to the client who can verify that it received a valid token during issuance. The architecture further
+defines options for private or public metadata that can be embeded in the token by the issuer.
 
 While in many applications the trust signals that are attributed to clients via anonymous credentials
 should be known to them, there are cases where these signals need to remain hidden from the clients 
