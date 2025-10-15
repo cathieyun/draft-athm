@@ -314,7 +314,18 @@ return an integer value corresponding to the bucket bound to the token during is
 
 # Security Considerations {#security}
 
-TODO Security
+ATHM is a privately verifiable token scheme, and therefore, the Issuer and Origin have 
+joint configuration. The privacy consideration from {{Section 6 of ARCHITECTURE}} apply 
+to deployments of the ATHM scheme. The Origin-Client unlinkability of the ATHM depends on 
+the size of the hidden metadata, which reduced the size of the anonymity sets allowing the
+issuer to partition clients according to their token metedata bits. As discussed in {{Section 6.1 of ARCHITECTURE}}
+this could enable the Issuer to track as many clients as the domain size of the metadata.
+Since the metadata is private the assigned anonymity sets to clients remain hidden, e.g.,
+if the issuer is trying to track a small set of client, it can hide which these clients are.
+As suggested in {{Section 6.1 of ARCHITECTURE}} each deployment should carefully consider the
+balance of the utility obtained by the private metadata and the reduction of privacy and chose
+a setting that most closely alignes with its goals.
+
 
 
 # IANA Considerations
