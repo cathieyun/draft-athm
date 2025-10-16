@@ -1204,24 +1204,24 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">The Privacy Pass architecture introduced in <span>[<a href="#ARCHITECTURE" class="cite xref">ARCHITECTURE</a>]</span> defines an anonymous single use token scheme.
-The strongest anonymity instantiation of a Privacy Pass token scheme carries exactly one bit of information
-about the client, namely the fact that this client was issued a valid token as a trust signal, and this bit
+<p id="section-1-1">The Privacy Pass architecture introduced in <span>[<a href="#ARCHITECTURE" class="cite xref">ARCHITECTURE</a>]</span> defines an anonymous, single use token scheme.
+The strongest-anonymity instantiation of a Privacy Pass token scheme carries exactly one bit of information
+about the client, namely the fact that the client was issued a valid token as a trust signal, and this bit
 is known to the client who can verify that it received a valid token during issuance. The architecture further
 defines options for private or public metadata that can be embeded in the token by the issuer.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">While in many applications the trust signals that are attributed to clients via anonymous credentials
 should be known to them, there are cases where these signals need to remain hidden from the clients
 as a prerequisite for the effectiveness of the token scheme as a trust conveying mechanism. These settings
-relate to fraud detection where allowing the attacker to learn that it has been flagged as fraudulent
+relate to fraud detection, where allowing the attacker to learn that it has been flagged as fraudulent
 enables them to adapt and update their attack strategies much more effectively.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">An Anonymous Token with Hidden Metadata (ATHM), as specified in <span>[<a href="#ATHM-SPEC" class="cite xref">ATHM-SPEC</a>]</span>, allows the issuer to embed
 a fixed number of hidden metadata bits in the issued token. These metadata bits are only readable at
 token redemption by the party holding the secret key for the scheme. These bits reduce the anonymity
-properties of the tokens allowing the issuer to partition clients into as many groups as the domain of
-metadata in a secret way. That is why it is important to choose carefully the limit on the allowed metadata
+properties of the tokens by allowing the issuer to partition clients into as many groups as the domain of
+metadata, in a secret way. That is why it is important to carefully choose the limit on the allowed metadata
 bits. The client can verify that the token it was issued does not contain more metadata bits than allowed.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">The ATHM tokens provide a way to enable hidden trust signals in an authentication token while achieving as
-strong anonimity set properties as possible in this setting. Such tokens provide a bridge for using anonymous
+<p id="section-1-4">The ATHM tokens provide a way to enable hidden trust signals in an authentication token, while achieving the
+strongest anonymity properties possible in this setting. Such tokens provide a bridge for using anonymous
 credentials in fraud applications.<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
 </div>

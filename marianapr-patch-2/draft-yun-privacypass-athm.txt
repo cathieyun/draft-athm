@@ -85,9 +85,9 @@ Table of Contents
 1.  Introduction
 
    The Privacy Pass architecture introduced in [ARCHITECTURE] defines an
-   anonymous single use token scheme.  The strongest anonymity
+   anonymous, single use token scheme.  The strongest-anonymity
    instantiation of a Privacy Pass token scheme carries exactly one bit
-   of information about the client, namely the fact that this client was
+   of information about the client, namely the fact that the client was
    issued a valid token as a trust signal, and this bit is known to the
    client who can verify that it received a valid token during issuance.
    The architecture further defines options for private or public
@@ -97,7 +97,7 @@ Table of Contents
    clients via anonymous credentials should be known to them, there are
    cases where these signals need to remain hidden from the clients as a
    prerequisite for the effectiveness of the token scheme as a trust
-   conveying mechanism.  These settings relate to fraud detection where
+   conveying mechanism.  These settings relate to fraud detection, where
    allowing the attacker to learn that it has been flagged as fraudulent
    enables them to adapt and update their attack strategies much more
    effectively.
@@ -107,15 +107,15 @@ Table of Contents
    metadata bits in the issued token.  These metadata bits are only
    readable at token redemption by the party holding the secret key for
    the scheme.  These bits reduce the anonymity properties of the tokens
-   allowing the issuer to partition clients into as many groups as the
-   domain of metadata in a secret way.  That is why it is important to
-   choose carefully the limit on the allowed metadata bits.  The client
-   can verify that the token it was issued does not contain more
+   by allowing the issuer to partition clients into as many groups as
+   the domain of metadata, in a secret way.  That is why it is important
+   to carefully choose the limit on the allowed metadata bits.  The
+   client can verify that the token it was issued does not contain more
    metadata bits than allowed.
 
    The ATHM tokens provide a way to enable hidden trust signals in an
-   authentication token while achieving as strong anonimity set
-   properties as possible in this setting.  Such tokens provide a bridge
+   authentication token, while achieving the strongest anonymity
+   properties possible in this setting.  Such tokens provide a bridge
    for using anonymous credentials in fraud applications.
 
 2.  Terminology
