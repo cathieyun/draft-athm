@@ -931,19 +931,19 @@ def VerifyToken(privateKey, token, nBuckets):
 
 # Security Considerations
 
-The work of [CDV22] proves the following properties for the ATHM construction presented here: 
+The work of [CDV22] proves the following properties for the ATHM construction presented here:
 unforgeability, unlinkability and privacy of the metadata. Unforgeability guarantees that only an
-issuer with a valid secret key can generate new tokens. Unlinkability states that tokens with the 
-same metadata are indistinguishable to the redeemer, i.e. it does not have any advatage in guessing 
-which issuance session (among those that assigned the same bit), a paricular redeemed token comes from. 
-Finally, privacy of the metadata guarantees that any party who does not know the secret verificaiton 
+issuer with a valid secret key can generate new tokens. Unlinkability states that tokens with the
+same metadata are indistinguishable to the redeemer, i.e. it does not have any advatage in guessing
+which issuance session (among those that assigned the same bit), a paricular redeemed token comes from.
+Finally, privacy of the metadata guarantees that any party who does not know the secret verificaiton
 key, cannot learn any information about the hidden metadata of a token.
 
 The only place where the construction presented in this document differs from the ATHM construcion presented
 in [CDV22] is the fact that we generalize that construction to more than one state for the hidden metadata.
 This requires that the ZK proof provided during issuance to the client, proves a new bound on the number of embedded
 bits in the token. The proofs of unfogeability and the privacy of the hidden metadata bits do not depend on the
-range of the metadata. The unlinkability proof accounts for the fact that the issuer can partition the clients into 
+range of the metadata. The unlinkability proof accounts for the fact that the issuer can partition the clients into
 a larger than two number of groups since unlinkability hold only amoung tokens with the same metadata.
 
 # IANA Considerations
