@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-12T00:39:32.210853+00:00",
+  "timestamp": "2025-10-16T00:38:51.144887+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -743,6 +743,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOO-FvB86tycB7",
+      "title": "Update draft-yun-privacypass-athm.md",
+      "url": "https://github.com/cathieyun/draft-athm/pull/18",
+      "state": "OPEN",
+      "author": "marianapr",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "intro draft",
+      "createdAt": "2025-10-15T03:31:11Z",
+      "updatedAt": "2025-10-15T04:16:08Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "44d9e0d539daa5b049f63c3026e16645bbfebc94",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "marianapr-patch-2",
+      "headRefOid": "ce3f4486bc9adfcdd8d34df446739a96830862d0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
