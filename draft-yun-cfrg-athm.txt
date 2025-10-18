@@ -5,10 +5,10 @@
 Crypto Forum                                                      C. Yun
 Internet-Draft                                                C. A. Wood
 Intended status: Informational                               Apple, Inc.
-Expires: 13 April 2026                                        M. Raykova
+Expires: 21 April 2026                                        M. Raykova
                                                           S. Schlesinger
                                                                   Google
-                                                         10 October 2025
+                                                         18 October 2025
 
 
                  Anonymous Tokens with Hidden Metadata
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 April 2026.
+   This Internet-Draft will expire on 21 April 2026.
 
 Copyright Notice
 
@@ -1000,7 +1000,28 @@ def VerifyToken(privateKey, token, nBuckets):
 
 6.  Security Considerations
 
-   TODO
+   The work of [CDV22] proves the following properties for the ATHM
+   construction presented here: unforgeability, unlinkability and
+   privacy of the metadata.  Unforgeability guarantees that only an
+   issuer with a valid secret key can generate new tokens.
+   Unlinkability states that tokens with the same metadata are
+   indistinguishable to the redeemer, i.e. the redeemer does not have
+   any advatage in guessing which issuance session (among those assigned
+   the same metadata) a paricular redeemed token comes from.  Finally,
+   privacy of the metadata guarantees that any party who does not know
+   the secret verification key cannot learn any information about the
+   hidden metadata of a token.
+
+   The only place where the construction presented in this document
+   differs from the ATHM construcion presented in [CDV22] is the fact
+   that we generalize that construction to more than one bit for the
+   hidden metadata.  This requires that the ZK proof provided during
+   issuance to the client proves a new bound on the number of embedded
+   bits in the token.  The proofs of unfogeability and the privacy of
+   the hidden metadata bits do not depend on the range of the metadata.
+   The unlinkability proof accounts for the fact that the issuer can
+   partition the clients into a larger than two number of groups, since
+   unlinkability only holds among tokens with the same metadata.
 
 7.  IANA Considerations
 
@@ -1031,6 +1052,9 @@ def VerifyToken(privateKey, token, nBuckets):
               <https://www.rfc-editor.org/rfc/rfc8017>.
 
 8.2.  Informative References
+
+   [CDV22]    "Anonymous Tokens with Stronger Metadata Bit Hiding from
+              Algebraic MACs", n.d., <https://eprint.iacr.org/2013/516>.
 
    [NISTCurves]
               "Digital signature standard (DSS)", National Institute of
