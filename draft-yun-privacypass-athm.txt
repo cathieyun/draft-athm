@@ -84,7 +84,39 @@ Table of Contents
 
 1.  Introduction
 
-   TODO Introduction
+   The Privacy Pass architecture introduced in [ARCHITECTURE] defines an
+   anonymous, single use token scheme.  The strongest-anonymity
+   instantiation of a Privacy Pass token scheme carries exactly one bit
+   of information about the client, namely the fact that the client was
+   issued a valid token as a trust signal, and this bit is known to the
+   client who can verify that it received a valid token during issuance.
+   The architecture further defines options for private or public
+   metadata that can be embeded in the token by the issuer.
+
+   While in many applications the trust signals that are attributed to
+   clients via anonymous credentials should be known to them, there are
+   cases where these signals need to remain hidden from the clients as a
+   prerequisite for the effectiveness of the token scheme as a trust
+   conveying mechanism.  These settings relate to fraud detection, where
+   allowing the attacker to learn that it has been flagged as fraudulent
+   enables them to adapt and update their attack strategies much more
+   effectively.
+
+   An Anonymous Token with Hidden Metadata (ATHM), as specified in
+   [ATHM-SPEC], allows the issuer to embed a fixed number of hidden
+   metadata bits in the issued token.  These metadata bits are only
+   readable at token redemption by the party holding the secret key for
+   the scheme.  These bits reduce the anonymity properties of the tokens
+   by allowing the issuer to partition clients into as many groups as
+   the domain of metadata, in a secret way.  That is why it is important
+   to carefully choose the limit on the allowed metadata bits.  The
+   client can verify that the token it was issued does not contain more
+   metadata bits than allowed.
+
+   The ATHM tokens provide a way to enable hidden trust signals in an
+   authentication token, while achieving the strongest anonymity
+   properties possible in this setting.  Such tokens provide a bridge
+   for using anonymous credentials in fraud applications.
 
 2.  Terminology
 
@@ -344,7 +376,21 @@ Table of Contents
 
 7.  Security Considerations
 
-   TODO Security
+   ATHM is a privately verifiable token scheme, and therefore, the
+   Issuer and Origin have joint configuration.  The privacy
+   consideration from Section 6 of [ARCHITECTURE] apply to deployments
+   of the ATHM scheme.  The Origin-Client unlinkability of the ATHM
+   depends on the size of the hidden metadata, which reduced the size of
+   the anonymity sets allowing the issuer to partition clients according
+   to their token metedata bits.  As discussed in Section 6.1 of
+   [ARCHITECTURE] this could enable the Issuer to track as many clients
+   as the domain size of the metadata.  Since the metadata is private
+   the assigned anonymity sets to clients remain hidden, e.g., if the
+   issuer is trying to track a small set of client, it can hide which
+   these clients are.  As suggested in Section 6.1 of [ARCHITECTURE]
+   each deployment should carefully consider the balance of the utility
+   obtained by the private metadata and the reduction of privacy and
+   chose a setting that most closely alignes with its goals.
 
 8.  IANA Considerations
 
