@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-16T00:38:51.144887+00:00",
+  "timestamp": "2025-10-19T00:43:35.770852+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -749,26 +749,140 @@
       "id": "PR_kwDOO-FvB86tycB7",
       "title": "Update draft-yun-privacypass-athm.md",
       "url": "https://github.com/cathieyun/draft-athm/pull/18",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "marianapr",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "intro draft",
       "createdAt": "2025-10-15T03:31:11Z",
-      "updatedAt": "2025-10-15T04:16:08Z",
+      "updatedAt": "2025-10-18T01:26:13Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "44d9e0d539daa5b049f63c3026e16645bbfebc94",
       "headRepository": "cathieyun/draft-athm",
       "headRefName": "marianapr-patch-2",
-      "headRefOid": "ce3f4486bc9adfcdd8d34df446739a96830862d0",
+      "headRefOid": "82e9109dc196b9a0265d83c0faf0ca04064792ea",
+      "closedAt": "2025-10-18T01:26:09Z",
+      "mergedAt": "2025-10-18T01:26:09Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "e3cf49ec99381e9b50335e97aa7cd5d03443f783"
+      },
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "LGTM, thanks for writing this up! Well put :)\r\n\r\nWill leave this PR open to give @chris-wood and @SamuelSchlesinger time to comment on it, with plans to close / merge it in on Friday if there are no objections.",
+          "createdAt": "2025-10-16T05:05:55Z",
+          "updatedAt": "2025-10-16T05:05:55Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOO-FvB87HQ0ko",
+          "commit": {
+            "abbreviatedOid": "76fd630"
+          },
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "LGTM! There were just some doc reference and linter errors, which I fixed directly.",
+          "createdAt": "2025-10-16T05:06:46Z",
+          "updatedAt": "2025-10-16T05:06:46Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOO-FvB86t_tOS",
+      "title": "Update draft-yun-cfrg-athm.md",
+      "url": "https://github.com/cathieyun/draft-athm/pull/19",
+      "state": "MERGED",
+      "author": "marianapr",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "security considerations",
+      "createdAt": "2025-10-16T02:53:12Z",
+      "updatedAt": "2025-10-18T01:25:59Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "44d9e0d539daa5b049f63c3026e16645bbfebc94",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "marianapr-patch-3",
+      "headRefOid": "cabc6b99ddeb79519dfb1a81c9726c2da99a2b0c",
+      "closedAt": "2025-10-18T01:25:55Z",
+      "mergedAt": "2025-10-18T01:25:55Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "98b49d4d546619dc982853d233032014076367ed"
+      },
+      "comments": [
+        {
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "body": "LGTM, thanks for writing this up!\r\n\r\nWill leave this PR open to give @chris-wood and @SamuelSchlesinger time to comment on it, with plans to close / merge it in on Friday if there are no objections.",
+          "createdAt": "2025-10-16T05:15:05Z",
+          "updatedAt": "2025-10-16T05:15:05Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOO-FvB87HQ3-W",
+          "commit": {
+            "abbreviatedOid": "cabc6b9"
+          },
+          "author": "cathieyun",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "LGTM! I fixed some errors with the link, and made a few minor grammatical / typo fixes directly on the PR.",
+          "createdAt": "2025-10-16T05:15:41Z",
+          "updatedAt": "2025-10-16T05:15:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOO-FvB86uaFDw",
+      "title": "Editorial cleanup",
+      "url": "https://github.com/cathieyun/draft-athm/pull/20",
+      "state": "OPEN",
+      "author": "cathieyun",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "- fix authors\r\n- add keywords\r\n- add abstract\r\n- add acknowledgements",
+      "createdAt": "2025-10-18T02:16:44Z",
+      "updatedAt": "2025-10-18T23:19:29Z",
+      "baseRepository": "cathieyun/draft-athm",
+      "baseRefName": "main",
+      "baseRefOid": "e3cf49ec99381e9b50335e97aa7cd5d03443f783",
+      "headRepository": "cathieyun/draft-athm",
+      "headRefName": "cathie/ietf124-cleanup",
+      "headRefOid": "a8fb44d7bdac99b7e9878733f186a9b392004cc7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOO-FvB87H6EmB",
+          "commit": {
+            "abbreviatedOid": "a8fb44d"
+          },
+          "author": "SamuelSchlesinger",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2025-10-18T23:19:28Z",
+          "updatedAt": "2025-10-18T23:19:28Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
