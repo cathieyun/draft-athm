@@ -12,9 +12,10 @@ v: 3
 area: "IRTF"
 workgroup: "Crypto Forum"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - anonymous credentials
+ - hidden metadata
+ - fraud prevention
+ - zero-knowledge proofs
 venue:
   group: "Crypto Forum"
   type: "Research Group"
@@ -956,7 +957,7 @@ This document has no IANA actions.
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+Thanks to Melissa Chase for discussion about the ATHM paper. Thanks also to Tommy Pauly, Phillipp Schoppmann and Ghous Amjad for collaboration on the ATHM specifications.
 
 # Test Vectors
 {:numbered="false"}

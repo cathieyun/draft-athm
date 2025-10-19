@@ -10,19 +10,34 @@ number:
 date:
 v: 3
 venue:
-  group: PRIVACYPASS
-  type: Privacy Pass
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "Privacy Pass"
+  type: ""
+  mail: "privacy-pass@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/privacy-pass"
+  github: "cathieyun/draft-athm"
+  latest: "https://cathieyun.github.io/draft-athm/draft-yun-privacypass-athm.html"
 
 author:
  -
-    ins: J. Appleseed
-    name: Johnny Appleseed
+    ins: C. Yun
+    name: Cathie Yun
     organization: Apple, Inc.
-    email: johnny@apple.com
+    email: cathieyun@gmail.com
+ -
+    ins: C. A. Wood
+    name: Christopher A. Wood
+    org: Apple, Inc.
+    email: caw@heapingbits.net
+ -
+    ins: M. Raykova
+    name: Mariana Raykova
+    organization: Google
+    email: marianar@google.com
+ -
+    ins: S. Schlesinger
+    name: Samuel Schlesinger
+    organization: Google
+    email: sgschlesinger@gmail.com
 
 normative:
   AUTHSCHEME: RFC9577
@@ -33,8 +48,8 @@ informative:
 
 --- abstract
 
-TODO Abstract
-
+This document specifies the issuance and redemption protocols for
+tokens based on the Anonymous Tokens with Hidden Metadata (ATHM) protocol.
 
 --- middle
 
@@ -352,4 +367,4 @@ following entries.
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+Thanks to Melissa Chase for discussion about the ATHM paper. Thanks also to Tommy Pauly, Phillipp Schoppmann and Ghous Amjad for collaboration on the ATHM specifications.
