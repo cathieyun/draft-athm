@@ -2,10 +2,13 @@
 
 
 
-Network Working Group                                       J. Appleseed
-Internet-Draft                                               Apple, Inc.
-Intended status: Standards Track                         18 October 2025
-Expires: 21 April 2026
+Network Working Group                                             C. Yun
+Internet-Draft                                                C. A. Wood
+Intended status: Standards Track                             Apple, Inc.
+Expires: 22 April 2026                                        M. Raykova
+                                                          S. Schlesinger
+                                                                  Google
+                                                         19 October 2025
 
 
      Anonymous Token with Hidden Metadata Privacy Pass Issuance and
@@ -14,23 +17,26 @@ Expires: 21 April 2026
 
 Abstract
 
-   TODO Abstract
+   This document specifies the issuance and redemption protocols for
+   tokens based on the Anonymous Tokens with Hidden Metadata (ATHM)
+   protocol.
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-yun-privacypass-
-   athm/.
+   https://cathieyun.github.io/draft-athm/draft-yun-privacypass-
+   athm.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-yun-privacypass-athm/.
 
-   Discussion of this document takes place on the PRIVACYPASS Privacy
-   Pass mailing list (mailto:WG@example.com), which is archived at
-   https://example.com/WG.
+   Discussion of this document takes place on the Privacy Pass mailing
+   list (mailto:privacy-pass@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/privacy-pass.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/privacy-pass/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/USER/REPO.
+   https://github.com/cathieyun/draft-athm.
 
 Status of This Memo
 
@@ -47,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 April 2026.
+   This Internet-Draft will expire on 22 April 2026.
 
 Copyright Notice
 
@@ -80,7 +86,7 @@ Table of Contents
    8.  IANA Considerations
    9.  Normative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -458,10 +464,27 @@ Table of Contents
 
 Acknowledgments
 
-   TODO acknowledge.
+   Thanks to Melissa Chase for discussion about the ATHM paper.  Thanks
+   also to Tommy Pauly, Phillipp Schoppmann and Ghous Amjad for
+   collaboration on the ATHM specifications.
 
-Author's Address
+Authors' Addresses
 
-   Johnny Appleseed
+   Cathie Yun
    Apple, Inc.
-   Email: johnny@apple.com
+   Email: cathieyun@gmail.com
+
+
+   Christopher A. Wood
+   Apple, Inc.
+   Email: caw@heapingbits.net
+
+
+   Mariana Raykova
+   Google
+   Email: marianar@google.com
+
+
+   Samuel Schlesinger
+   Google
+   Email: sgschlesinger@gmail.com

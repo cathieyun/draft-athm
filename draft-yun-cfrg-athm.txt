@@ -5,10 +5,10 @@
 Crypto Forum                                                      C. Yun
 Internet-Draft                                                C. A. Wood
 Intended status: Informational                               Apple, Inc.
-Expires: 21 April 2026                                        M. Raykova
+Expires: 22 April 2026                                        M. Raykova
                                                           S. Schlesinger
                                                                   Google
-                                                         18 October 2025
+                                                         19 October 2025
 
 
                  Anonymous Tokens with Hidden Metadata
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 April 2026.
+   This Internet-Draft will expire on 22 April 2026.
 
 Copyright Notice
 
@@ -1072,7 +1072,9 @@ def VerifyToken(privateKey, token, nBuckets):
 
 Acknowledgments
 
-   TODO acknowledge.
+   Thanks to Melissa Chase for discussion about the ATHM paper.  Thanks
+   also to Tommy Pauly, Phillipp Schoppmann and Ghous Amjad for
+   collaboration on the ATHM specifications.
 
 Test Vectors
 
