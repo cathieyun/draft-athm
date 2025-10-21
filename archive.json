@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-19T00:43:35.770852+00:00",
+  "timestamp": "2025-10-21T00:39:27.819251+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -849,24 +849,26 @@
       "id": "PR_kwDOO-FvB86uaFDw",
       "title": "Editorial cleanup",
       "url": "https://github.com/cathieyun/draft-athm/pull/20",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cathieyun",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "- fix authors\r\n- add keywords\r\n- add abstract\r\n- add acknowledgements",
       "createdAt": "2025-10-18T02:16:44Z",
-      "updatedAt": "2025-10-18T23:19:29Z",
+      "updatedAt": "2025-10-19T20:37:29Z",
       "baseRepository": "cathieyun/draft-athm",
       "baseRefName": "main",
       "baseRefOid": "e3cf49ec99381e9b50335e97aa7cd5d03443f783",
       "headRepository": "cathieyun/draft-athm",
       "headRefName": "cathie/ietf124-cleanup",
       "headRefOid": "a8fb44d7bdac99b7e9878733f186a9b392004cc7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-10-19T20:36:59Z",
+      "mergedAt": "2025-10-19T20:36:59Z",
+      "mergedBy": "cathieyun",
+      "mergeCommit": {
+        "oid": "4498fdfe78a4459b7522bbe0b36b5626c1dc2aec"
+      },
       "comments": [],
       "reviews": [
         {
