@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-21T00:39:27.819251+00:00",
+  "timestamp": "2025-11-16T00:43:59.756232+00:00",
   "repo": "cathieyun/draft-athm",
   "labels": [
     {
@@ -161,6 +161,22 @@
       "createdAt": "2025-09-17T19:03:39Z",
       "updatedAt": "2025-10-09T00:15:06Z",
       "closedAt": "2025-10-09T00:15:06Z",
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOO-FvB87X55my",
+      "title": "Feedback/typos",
+      "url": "https://github.com/cathieyun/draft-athm/issues/21",
+      "state": "OPEN",
+      "author": "jkatz2",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I assume the line at the very beginning of Section 5 is a mistake.\n\nWhen describing various proofs that are given, it would be helpful to the reader to add a 1-sentence English description of what is being proven. In particular, the proof in Section 5.1.1 is *not* a proof of knowledge of the (entire) private key, but only a proof of knowledge of z = log_g Z. (I suppose you will eventually change over to using the Fiat-Shamir draft, but even then an English-language description of what is being proved would be helpful.)\n\nReference [CDV22] is incorrect/incomplete. You don't list the authors or a year, and I believe the correct URL is https://eprint.iacr.org/2022/1622 (which has a slightly different title).",
+      "createdAt": "2025-11-13T18:14:46Z",
+      "updatedAt": "2025-11-13T18:14:46Z",
+      "closedAt": null,
       "comments": []
     }
   ],
