@@ -327,6 +327,11 @@ hiddenMetadata = VerifyToken(skI, pkI, token)
 This function will fail with an error if the token is invalid. Otherwise, it will
 return an integer value corresponding to the bucket bound to the token during issuance.
 
+Successful verification does not establish that a Token is unspent. Before granting the redemption
+benefit, the Origin MUST atomically check and record the canonically serialized ATHM tag `t`,
+scoped to the Issuer key, and MUST reject a previously recorded tag. This state MUST be shared
+by Origins accepting Tokens under that key and retained for as long as those Tokens can be accepted.
+
 # Security Considerations {#security}
 
 ATHM is a privately verifiable token scheme, and therefore, the Issuer and Origin have
